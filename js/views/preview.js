@@ -32,6 +32,8 @@ directory.PreviewView = Backbone.View.extend({
 
     prevBtnClick: function() {
         console.log("PrevBtn");
+        var prevId = this.model.attributes.id - 1;
+        directory.router.navigate('preview/' + prevId, {trigger: true});
     },
 
     editBtnClick: function() {
@@ -41,5 +43,7 @@ directory.PreviewView = Backbone.View.extend({
 
     nextBtnClick: function() {
         console.log("NextBtn");
+        var nextId = this.model.attributes.id + 1;
+        directory.router.navigate('preview/' + nextId, {trigger: true});
     }
 });

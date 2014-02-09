@@ -87,9 +87,9 @@ directory.MemoryStore = function (successCallback, errorCallback) {
 
     this.days = [
         {"id": 1, "spanId":"span1", "date": "2014-01-21", "quote": "carpe diem", "author": "Lao Tzu", "pic":"img/elder.jpg", "sound":"api.soundcloud.com/tracks/76255568", "viewed":false},
-        {"id": 2, "spanId":"span1", "date": "2014-01-22", "quote": "carpe diem", "author": "Lao Tzu", "pic":"imageurl.jpg", "sound":"soundcloudurl", "viewed":false},
-        {"id": 3, "spanId":"span1", "date": "2014-01-23", "quote": "carpe diem", "author": "Lao Tzu", "pic":"imageurl.jpg", "sound":"soundcloudurl", "viewed":false},
-        {"id": 4, "spanId":"span2", "date": "2014-01-10", "quote": "carpe diem", "author": "Lao Tzu", "pic":"imageurl.jpg", "sound":"soundcloudurl", "viewed":false}
+        {"id": 2, "spanId":"span1", "date": "2014-01-22", "quote": "isn't that the whole point?", "author": "Barack Obama", "pic":"img/corfu2.jpg", "sound":"api.soundcloud.com/tracks/28284290", "viewed":false},
+        {"id": 3, "spanId":"span1", "date": "2014-01-23", "quote": "I know how hard it is for you to put food on your family.", "author": "George Bush", "pic":"img/cow.jpg", "sound":"api.soundcloud.com/tracks/123450519", "viewed":false},
+        {"id": 4, "spanId":"span1", "date": "2014-01-10", "quote": "Imagination is more important than knowledge", "author": "Albert Einstein", "pic":"img/ten.jpg", "sound":"api.soundcloud.com/tracks/20389181", "viewed":false}
     ];
 
     this.spans = [
