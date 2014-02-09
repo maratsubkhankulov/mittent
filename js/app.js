@@ -118,7 +118,7 @@ directory.Router = Backbone.Router.extend({
 
     dashboard: function() {
         //XXX: get username and spanId
-        var spanId = "span1";
+        var spanId = "xz5yra";
         var span = new directory.Span({id: spanId}); //XXX: with id associated with username
         var self = this;
         span.fetch({

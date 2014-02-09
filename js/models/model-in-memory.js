@@ -108,16 +108,16 @@ directory.MemoryStore = function (successCallback, errorCallback) {
     }
 
     this.days = [
-        {"id": 1, "spanId":"span1", "date": "2014-02-08", "quote": "carpe diem", "author": "Horace", "pic":"img/elder.jpg", "sound":"api.soundcloud.com/tracks/76255568", "viewed":true},
-        {"id": 2, "spanId":"span1", "date": "2014-02-09", "quote": "isn't that the whole point?", "author": "Barack Obama", "pic":"img/corfu2.jpg", "sound":"api.soundcloud.com/tracks/28284290", "viewed":false},
-        {"id": 3, "spanId":"span1", "date": "2014-02-10", "quote": "I know how hard it is for you to put food on your family.", "author": "George Bush", "pic":"img/cow.jpg", "sound":"api.soundcloud.com/tracks/123450519", "viewed":false},
-        {"id": 4, "spanId":"span1", "date": "2014-02-11", "quote": "Imagination is more important than knowledge", "author": "Albert Einstein", "pic":"img/ten.jpg", "sound":"api.soundcloud.com/tracks/20389181", "viewed":false}
+        {"id": 1, "spanId":"xz5yra", "date": "2014-02-08", "quote": "carpe diem", "author": "Horace", "pic":"img/elder.jpg", "sound":"api.soundcloud.com/tracks/76255568", "viewed":true},
+        {"id": 2, "spanId":"xz5yra", "date": "2014-02-09", "quote": "isn't that the whole point?", "author": "Barack Obama", "pic":"img/corfu2.jpg", "sound":"api.soundcloud.com/tracks/28284290", "viewed":false},
+        {"id": 3, "spanId":"xz5yra", "date": "2014-02-10", "quote": "I know how hard it is for you to put food on your family.", "author": "George Bush", "pic":"img/cow.jpg", "sound":"api.soundcloud.com/tracks/123450519", "viewed":false},
+        {"id": 4, "spanId":"xz5yra", "date": "2014-02-11", "quote": "Imagination is more important than knowledge", "author": "Albert Einstein", "pic":"img/ten.jpg", "sound":"api.soundcloud.com/tracks/20389181", "viewed":false}
     ];
 
     this.spans = [
-        {"id": "span1", "startDate": "2014-01-21", "endDate": "2014-02-12", "publicId":"somePublicId"},
-        {"id": "span2", "startDate": "2014-02-03", "endDate": "2014-02-10", "publicId":"somePublicId"},
-        {"id": "span3", "startDate": "2014-02-15", "endDate": "2014-02-20", "publicId":"somePublicId"}
+        {"id": "xz5yra", "startDate": "2014-01-08", "endDate": "2014-02-11", "publicId":"xz5yra"},
+        {"id": "asdfasd", "startDate": "2014-02-03", "endDate": "2014-02-10", "publicId":"asdfasd"},
+        {"id": "234dfsd", "startDate": "2014-02-15", "endDate": "2014-02-20", "publicId":"234dfsd"}
     ]
 
     callLater(successCallback);
