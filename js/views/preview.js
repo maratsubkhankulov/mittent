@@ -2,6 +2,12 @@ directory.PreviewView = Backbone.View.extend({
 
     shellTitle: "Preview",
 
+    events: {
+        "click #prevBtn":"prevBtnClick",
+        "click #editBtn":"editBtnClick",
+        "click #nextBtn":"nextBtnClick"
+    },
+
 	initialize: function() {
         //Fetch by snap_id and current day
         //XXX: set shell title to Dashboard
@@ -22,6 +28,18 @@ directory.PreviewView = Backbone.View.extend({
 
     onBackButton: function() {
         console.log("Preview back button");
+    },
 
+    prevBtnClick: function() {
+        console.log("PrevBtn");
+    },
+
+    editBtnClick: function() {
+        console.log("EditBtn");
+        directory.router.navigate('edit/' + this.model.attributes.id, {trigger: true});
+    },
+
+    nextBtnClick: function() {
+        console.log("NextBtn");
     }
 });

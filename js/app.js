@@ -26,10 +26,12 @@ var directory = {
 directory.Router = Backbone.Router.extend({
 
     routes: {
+        "":                     "loginOrRegister",
         "dashboard":            "dashboard",
         "home":                 "home",
         "view/:id":             "today",
-        "preview/:id":          "preview"
+        "preview/:id":          "preview",
+        "edit/:id":             "edit"
     },
 
     initialize: function () {
@@ -93,11 +95,29 @@ directory.Router = Backbone.Router.extend({
                 self.$content.html(directory.previewView.render().el);
             }
         });
+    },
+
+    edit: function(dayId) {
+        var day = new directory.Day({id: dayId});
+        var self = this;
+        day.fetch({
+            success: function(data) {
+                console.log (data);
+                directory.editView = new directory.EditView({model: data});
+                directory.editView.initialize(dayId);
+                self.$content.html(directory.editView.render().el);
+            }
+        });    
+    },
+
+    loginOrRegister: function() {
+        directory.loginOrRegisterView = new directory.LoginOrRegisterView();
+        this.$content.html(directory.loginOrRegisterView.render().el)
     }
 });
 
 $(document).on("ready", function () {
-    directory.loadTemplates(["HomeView", "ShellView", "TodayView", "DashboardView", "DayListItemView", "PreviewView"],
+    directory.loadTemplates(["HomeView", "ShellView", "TodayView", "DashboardView", "DayListItemView", "PreviewView", "EditView", "LoginOrRegisterView"],
         function () {
 			console.log("ready!");
             directory.router = new directory.Router();
