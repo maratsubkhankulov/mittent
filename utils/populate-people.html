@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+<script src="../lib/jquery-1.9.1.min.js"></script>
+<script src="../lib/underscore-min.js"></script>
+<script src="../lib/parse-1.2.2.min.js"></script>
+
+<script>
+
+    Parse.initialize("Rb10KjdAyAAnV0Z4f4ZjCpwIgDbPSp82UKJOhfga", "HxgeIqEaP4wPRHfwnIv1tqbwqRvwff2SEYQWP7TO");
+    
+    var promisesPhase1 = [];
+
+    var Person = Parse.Object.extend({
+
+    	className: "Person"
+
+	});
+
+	var PersonCollection = Parse.Collection.extend(({
+
+	    model: Person
+
+	}));
+
+    var people = new PersonCollection(
+        [
+            {"firstName": "Mario", "lastName": "Hayashi", "pic": "james_king.jpg"},
+            {"firstName": "Michael", "lastName": "Howell", "pic": "julie_taylor.jpg"},
+            {"firstName": "Marat", "lastName": "Subkhankulov", "pic": "eugene_lee.jpg"}
+        ]
+    );
+
+    // Pass 1: Save basic employee information
+    people.each(function(person) {
+        promisesPhase1.push(person.save());
+    });
+
+	alert("Database populated with people");
+
+    Parse.Promise.when(promisesPhase1).then(function() {
+        alert("Database populated with people");
+    });
+
+</script>
+
+</body>
+</html>

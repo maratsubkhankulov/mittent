@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+<script src="../lib/jquery-1.9.1.min.js"></script>
+<script src="../lib/underscore-min.js"></script>
+<script src="../lib/parse-1.2.2.min.js"></script>
+
+<script>
+
+    Parse.initialize("Rb10KjdAyAAnV0Z4f4ZjCpwIgDbPSp82UKJOhfga", "HxgeIqEaP4wPRHfwnIv1tqbwqRvwff2SEYQWP7TO");
+    
+    var promisesPhase1 = [];
+
+    var Payment = Parse.Object.extend({
+        className: "Payment"
+    });
+
+    var PaymentCollection = Parse.Collection.extend({
+        model: Payment
+    });
+
+    var payment = new PaymentCollection(
+        [
+            {"amount": "James", "description": "King", "date": "01/11/2014", "share": "100"}
+        ]
+    );
+
+    // Pass 1: Save basic employee information
+    requests.each(function(payment) {
+        promisesPhase1.push(payment.save());
+    });
+
+    Parse.Promise.when(promisesPhase1).then(function() {
+        alert("Database populated with payments");
+    });
+
+</script>
+
+</body>
+</html>

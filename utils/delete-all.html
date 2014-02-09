@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+<script src="../lib/jquery-1.9.1.min.js"></script>
+<script src="../lib/underscore-min.js"></script>
+<script src="../lib/parse-1.2.2.min.js"></script>
+
+<script>
+
+    Parse.initialize("Oo2DLP65Y77Gh3W84BHTz7ld0vbbbeOfHOMG0N6h", "QJCsC74FVUz7eh0Xqx8azL4nNuAmyVMCDOrp16QE");
+    
+    var Employee = Parse.Object.extend({
+        className: "Employee"
+    });
+
+    EmployeeCollection = Parse.Collection.extend(({
+
+        model: Employee
+
+    }));
+
+    var employees = new EmployeeCollection();
+
+    employees.fetch({
+      success: function(collection) {
+        promisesPhase1.push(
+            collection.each(function(object) {
+                object.destroy();
+            });
+        );
+        Parse.Promise.when(promisesPhase2).then(function() {
+            console.log(employees.size());
+        });
+      },
+      
+      error: function(collection, error) {
+        // The collection could not be retrieved.
+      }
+    });
+
+</script>
+
+</body>
+</html>
