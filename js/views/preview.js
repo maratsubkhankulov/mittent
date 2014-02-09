@@ -21,6 +21,7 @@ directory.PreviewView = Backbone.View.extend({
         this.$el.html(this.template(this.model.attributes));
         
         directory.previewTodayView = new directory.TodayView({model: this.model});
+        directory.previewTodayView.endDate = this.endDate;
         $('#previewContent', this.el).append(directory.previewTodayView.render().el);
         return this;
     },
@@ -31,18 +32,18 @@ directory.PreviewView = Backbone.View.extend({
 
     prevBtnClick: function() {
         console.log("PrevBtn");
-        var prevId = this.model.attributes.id - 1;
-        directory.router.navigate('preview/' + prevId, {trigger: true});
+        var prevDate = directory.dateToString(directory.decrementDate(directory.newDate(this.model.attributes.date)));
+        directory.router.navigate('preview/' + this.model.attributes.spanId + "/" + prevDate, {trigger: true});
     },
 
     editBtnClick: function() {
         console.log("EditBtn");
-        directory.router.navigate('edit/' + this.model.attributes.id, {trigger: true});
+        directory.router.navigate('edit/' + this.model.attributes.spanId + "/" + this.model.attributes.date, {trigger: true});
     },
 
     nextBtnClick: function() {
         console.log("NextBtn");
-        var nextId = this.model.attributes.id + 1;
-        directory.router.navigate('preview/' + nextId, {trigger: true});
+        var nextDate = directory.dateToString(directory.incrementDate(directory.newDate(this.model.attributes.date)));
+        directory.router.navigate('preview/' + this.model.attributes.spanId + "/" + nextDate, {trigger: true});
     }
 });

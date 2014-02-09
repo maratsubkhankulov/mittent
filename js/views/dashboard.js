@@ -64,6 +64,16 @@ directory.DayListItemView = Backbone.View.extend({
         var data = _.clone(this.model.attributes);
         data.id = this.model.id;
         this.$el.html(this.template(data));
+        console.log((directory.newDate(this.model.attributes.date)));
+        console.log((directory.todaysDate()));
+        if ((directory.newDate(this.model.attributes.date)).getTime() == (directory.todaysDate()).getTime()) {
+            $('#today', this.el).append('<span class="glyphicon glyphicon-chevron-right"></span>');
+        }
+        if (this.model.attributes.viewed) {
+            $('#viewed', this.el).html('<span class="glyphicon glyphicon-ok-circle" style="color:green"></span>');
+        } else {
+            $('#viewed', this.el).html('<span class="glyphicon glyphicon-remove-circle style="color:red"></span>');
+        }
         return this;
     }
 

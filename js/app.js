@@ -19,8 +19,41 @@ var directory = {
         });
 
         $.when.apply(null, deferreds).done(callback);
-    }
+    },
 
+    dateToString: function(date) {
+        var dd = date.getDate();
+        var mm = date.getMonth()+1;
+        var yyyy = date.getFullYear();
+        var out = yyyy + "-" + mm + "-" + dd;
+        return out;
+    },
+
+    incrementDate: function(date) {
+        var newDate = new Date(date);
+        newDate.setDate(newDate.getDate() + 1);
+        return new Date(newDate);
+    },
+
+    decrementDate: function(date) {
+        var newDate = new Date(date);
+        newDate.setDate(newDate.getDate() - 1);
+        return new Date(newDate);
+    },
+
+    formatDateStr: function(dateStr) {
+        return dateStr.replace(/\b0(?=\d)/g, '')
+    },
+
+    newDate: function(dateStr) {
+        return new Date(directory.formatDateStr(dateStr));
+    },
+
+    todaysDate: function() {
+        var today = new Date();
+        today.setHours(0,0,0,0)
+        return today;
+    }
 };
 
 directory.Router = Backbone.Router.extend({
@@ -52,15 +85,6 @@ directory.Router = Backbone.Router.extend({
         this.$content.html(directory.homelView.el);
     },
 
-    today: function(spanId) {
-        var todaysDate = new Date();
-        var dd = todaysDate.getDate();
-        var mm = todaysDate.getMonth()+1;
-        var yyyy = todaysDate.getFullYear();
-        todaysDate = yyyy + "-" + mm + "-" + dd;
-        view(spanId, todaysDate);
-    },
-
     view: function(spanId, date) {
         // Get spanId associated with publicId, get today's Day id
         console.log ("View day with: " + spanId + ", " + date);
@@ -69,21 +93,27 @@ directory.Router = Backbone.Router.extend({
         span.fetch({
             success: function(data) {
                 console.log (data);
-                var endDate = data.attributes.endDate;
-                console.log("Today is: " + todaysDate);
+                var end = data.attributes.endDate;
                 var day = new directory.Day({id: [data.attributes.id, date]});
                 day.fetch({
                     success: function(data) {
                         console.log ("Fetched day");
                         console.log (data);
-                        directory.todayView = new directory.TodayView({model: data});
-                        directory.todayView.initialize(endDate);
+                        console.log("Today is: " + date + "End date is: " + end);
+                        directory.todayView = new directory.TodayView({model: data, endDate: end});
+                        directory.todayView.endDate = end;
                         $('body').html(directory.todayView.render().el);
                         self.$content = $("#content");
                     }
                 });
             }
         });
+    },
+
+    today: function(spanId) {
+        var todaysDate = new Date();
+        today = directory.dateToString(todaysDate);
+        this.view(spanId, today);
     },
 
     dashboard: function() {
@@ -102,27 +132,33 @@ directory.Router = Backbone.Router.extend({
     },
 
     preview: function(spanId, date) {
-        console.log("Preview: " + spanId, date)
+        console.log("Preview: " + spanId, date);
+        var span = new directory.Span({id: spanId});
+        var self = this;
+        span.fetch({
+            success: function(data) {
+                console.log (data);
+                var end = data.attributes.endDate;
+                var day = new directory.Day({id: [spanId, date]});
+                day.fetch({
+                    success: function(data) {
+                        console.log (data);
+                        directory.previewView = new directory.PreviewView({model: data});
+                        directory.previewView.endDate = end;
+                        self.$content.html(directory.previewView.render().el);
+                    }
+                });
+            }
+        });
+    },
+
+    edit: function(spanId, date) {
         var day = new directory.Day({id: [spanId, date]});
         var self = this;
         day.fetch({
             success: function(data) {
                 console.log (data);
-                directory.previewView = new directory.PreviewView({model: data});
-                directory.previewView.initialize();
-                self.$content.html(directory.previewView.render().el);
-            }
-        });
-    },
-
-    edit: function(dayId) {
-        var day = new directory.Day({id: dayId});
-        var self = this;
-        day.fetch({
-            success: function(data) {
-                console.log (data);
                 directory.editView = new directory.EditView({model: data});
-                directory.editView.initialize(dayId);
                 self.$content.html(directory.editView.render().el);
             }
         });    

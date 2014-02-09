@@ -10,10 +10,9 @@ directory.EditView = Backbone.View.extend({
 	},
 
     render: function () {
-    	console.log("The day id: " + this.dayId);
-        directory.shellView.setTitle(this.shellTitle + ": Day " + this.model.attributes.id + ": " + this.model.attributes.date);
+        directory.shellView.setTitle(this.shellTitle + ": " + this.model.attributes.date);
         directory.shellView.showBackArrow();
-        directory.shellView.setBackButtonRoute("#preview/" + this.model.attributes.id);
+        directory.shellView.setBackButtonRoute("#preview/" + this.model.attributes.spanId + "/" + this.model.attributes.date);
         this.$el.html(this.template(this.model.attributes));
         
         return this;
