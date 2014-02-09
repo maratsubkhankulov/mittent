@@ -29,9 +29,9 @@ directory.Router = Backbone.Router.extend({
         "":                     "loginOrRegister",
         "dashboard":            "dashboard",
         "home":                 "home",
-        "view/:id":             "today",
-        "preview/:id":          "preview",
-        "edit/:id":             "edit"
+        "view/:spanId":         "today",
+        "preview/:spanId/:date":"preview",
+        "edit/:spanId/:date":   "edit"
     },
 
     initialize: function () {
@@ -52,19 +52,31 @@ directory.Router = Backbone.Router.extend({
         this.$content.html(directory.homelView.el);
     },
 
-    today: function(publicId) {
+    today: function(spanId) {
         // Get spanId associated with publicId, get today's Day id
-        var todaysId = 1;
-        var day = new directory.Day({id: todaysId});
+        var span = new directory.Span({id: spanId});
         var self = this;
-        day.fetch({
+        span.fetch({
             success: function(data) {
                 console.log (data);
-
-                directory.todayView = new directory.TodayView({model: data});
-                directory.todayView.initialize(publicId);
-                $('body').html(directory.todayView.render().el);
-                self.$content = $("#content");
+                var todaysDate = new Date();
+                var dd = todaysDate.getDate();
+                var mm = todaysDate.getMonth()+1;
+                var yyyy = todaysDate.getFullYear();
+                todaysDate = yyyy + "-" + mm + "-" + dd;
+                var endDate = data.attributes.endDate;
+                console.log("Today is: " + todaysDate);
+                var day = new directory.Day({id: [data.attributes.id, todaysDate]});
+                day.fetch({
+                    success: function(data) {
+                        console.log ("Fetched day");
+                        console.log (data);
+                        directory.todayView = new directory.TodayView({model: data});
+                        directory.todayView.initialize(endDate);
+                        $('body').html(directory.todayView.render().el);
+                        self.$content = $("#content");
+                    }
+                });
             }
         });
     },
@@ -84,8 +96,9 @@ directory.Router = Backbone.Router.extend({
         });
     },
 
-    preview: function(dayId) {
-        var day = new directory.Day({id: dayId});
+    preview: function(spanId, date) {
+        console.log("Preview: " + spanId, date)
+        var day = new directory.Day({id: [spanId, date]});
         var self = this;
         day.fetch({
             success: function(data) {

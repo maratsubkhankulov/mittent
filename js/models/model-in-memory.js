@@ -4,7 +4,8 @@ directory.Day = Backbone.Model.extend({
 
     sync: function(method, model, options) {
         if (method === "read") {
-            directory.store.findById(parseInt(this.id), function (data) {
+            console.log("Get day: " + this.id[0] + this.id[1]);
+            directory.store.findDayByDateAndSpanId(this.id, function (data) {
                 options.success(data);
             });
         }
@@ -76,6 +77,27 @@ directory.MemoryStore = function (successCallback, errorCallback) {
         callLater(callback, dayCollection);
     }
 
+    this.findDayByDateAndSpanId = function (dateAndSpanId, callback) {
+        //console.log("Find day by date, spanId: " + dateAndSpanId[0]);
+        var days = this.days;
+        var day = null;
+        var l = days.length;
+        for (var i = 0; i < l; i++) {
+            console.log("Comparing spanId: " + days[i].spanId + "=" + dateAndSpanId[0]);
+            if (days[i].spanId === dateAndSpanId[0]) {
+                //console.log("Comparing date strings: " + days[i].date + "=" + dateAndSpanId[1]);
+                var date1 = new Date(days[i].date.replace(/\b0(?=\d)/g, ''));
+                var date2 = new Date(dateAndSpanId[1]);
+                //console.log("Comparing date: " + date1 + "=" + date2);
+                if (date1.getTime() == date2.getTime()) {
+                    day = days[i];
+                    break;
+                }
+            }
+        }
+        callLater(callback, day);
+    }
+
     // Used to simulate async calls. This is done to provide a consistent interface with stores that use async data access APIs
     var callLater = function (callback, data) {
         if (callback) {
@@ -86,7 +108,7 @@ directory.MemoryStore = function (successCallback, errorCallback) {
     }
 
     this.days = [
-        {"id": 1, "spanId":"span1", "date": "2014-01-21", "quote": "carpe diem", "author": "Lao Tzu", "pic":"img/elder.jpg", "sound":"api.soundcloud.com/tracks/76255568", "viewed":false},
+        {"id": 1, "spanId":"span1", "date": "2014-02-09", "quote": "carpe diem", "author": "Lao Tzu", "pic":"img/elder.jpg", "sound":"api.soundcloud.com/tracks/76255568", "viewed":false},
         {"id": 2, "spanId":"span1", "date": "2014-01-22", "quote": "isn't that the whole point?", "author": "Barack Obama", "pic":"img/corfu2.jpg", "sound":"api.soundcloud.com/tracks/28284290", "viewed":false},
         {"id": 3, "spanId":"span1", "date": "2014-01-23", "quote": "I know how hard it is for you to put food on your family.", "author": "George Bush", "pic":"img/cow.jpg", "sound":"api.soundcloud.com/tracks/123450519", "viewed":false},
         {"id": 4, "spanId":"span1", "date": "2014-01-10", "quote": "Imagination is more important than knowledge", "author": "Albert Einstein", "pic":"img/ten.jpg", "sound":"api.soundcloud.com/tracks/20389181", "viewed":false}
