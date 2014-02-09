@@ -53,20 +53,25 @@ directory.Router = Backbone.Router.extend({
     },
 
     today: function(spanId) {
+        var todaysDate = new Date();
+        var dd = todaysDate.getDate();
+        var mm = todaysDate.getMonth()+1;
+        var yyyy = todaysDate.getFullYear();
+        todaysDate = yyyy + "-" + mm + "-" + dd;
+        view(spanId, todaysDate);
+    },
+
+    view: function(spanId, date) {
         // Get spanId associated with publicId, get today's Day id
+        console.log ("View day with: " + spanId + ", " + date);
         var span = new directory.Span({id: spanId});
         var self = this;
         span.fetch({
             success: function(data) {
                 console.log (data);
-                var todaysDate = new Date();
-                var dd = todaysDate.getDate();
-                var mm = todaysDate.getMonth()+1;
-                var yyyy = todaysDate.getFullYear();
-                todaysDate = yyyy + "-" + mm + "-" + dd;
                 var endDate = data.attributes.endDate;
                 console.log("Today is: " + todaysDate);
-                var day = new directory.Day({id: [data.attributes.id, todaysDate]});
+                var day = new directory.Day({id: [data.attributes.id, date]});
                 day.fetch({
                     success: function(data) {
                         console.log ("Fetched day");
@@ -104,7 +109,7 @@ directory.Router = Backbone.Router.extend({
             success: function(data) {
                 console.log (data);
                 directory.previewView = new directory.PreviewView({model: data});
-                directory.previewView.initialize(dayId);
+                directory.previewView.initialize();
                 self.$content.html(directory.previewView.render().el);
             }
         });

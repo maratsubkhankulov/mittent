@@ -15,8 +15,7 @@ directory.PreviewView = Backbone.View.extend({
 	},
 
     render: function () {
-    	console.log("The day id: " + this.dayId);
-        directory.shellView.setTitle(this.shellTitle + ": Day " + this.model.attributes.id + ": " + this.model.attributes.date);
+        directory.shellView.setTitle(this.shellTitle + ": " + this.model.attributes.date);
         directory.shellView.showBackArrow();
         directory.shellView.setBackButtonRoute("#dashboard");
         this.$el.html(this.template(this.model.attributes));
