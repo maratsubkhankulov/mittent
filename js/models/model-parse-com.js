@@ -1,49 +1,15 @@
-Parse.initialize("Rb10KjdAyAAnV0Z4f4ZjCpwIgDbPSp82UKJOhfga", "HxgeIqEaP4wPRHfwnIv1tqbwqRvwff2SEYQWP7TO");
+Parse.initialize("n13nQ6Xc6nbA1GMydEdUzC5CktBp99yEjws8LVep", "9CKAb8qfYVThFJy1qVd1jQsL8VzULET5MrU0O527");
 
-directory.Request = Parse.Object.extend({
+directory.Day = Parse.Object.extend({
+    className: "Day"
+});
 
-    className: "Request"
+directory.DayCollection = Parse.Collection.extend({
+
+    model: directory.Day
 
 });
 
-directory.RequestCollection = Parse.Collection.extend(({
-
-    model: directory.Request
-
-}));
-
-directory.Person = Parse.Object.extend({
-
-    className: "Person"
-
+directory.Span = Parse.Object.extend({
+    className: "Span"
 });
-
-directory.PersonCollection = Parse.Collection.extend(({
-
-    model: directory.Person
-
-}));
-
-directory.Request = Parse.Object.extend({
-
-    className: "Employee"
-
-});
-
-directory.Payment = Parse.Object.extend({
-
-	className: "Payment"
-
-});
-
-directory.EmployeeCollection = Parse.Collection.extend(({
-
-    model: directory.Employee
-
-}));
-
-directory.ReportsCollection = Parse.Collection.extend(({
-
-    model: directory.Employee
-
-}));

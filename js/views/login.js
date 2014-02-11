@@ -19,6 +19,35 @@ directory.LoginOrRegisterView = Backbone.View.extend({
     },
 
     goBtnClick: function() {
-        console.log("GoBtnClick");
+        var user = new Parse.User();
+        var username = $('#inputUsername', this.el).val();
+        var password = $('#inputPassword', this.el).val();
+
+        user.set("username", username);
+        user.set("password", password);
+        user.set("email", "email@example.com");
+         
+        // other fields can be set just like with Parse.Object
+        user.set("phone", "415-392-0202"); //Add new span and day collection here
+         
+        var self = this;
+        user.signUp(null, {
+            success: function(user) {
+                alert("signup was successful")
+            },
+            error: function(user, error) {
+                alert("Error: " + error.code + " " + error.message);
+                if (error.code == 202) {
+                    Parse.User.logIn(username, password, {
+                        success: function(user) {
+                            alert("Logged in:" + username);
+                        },
+                        error: function(user, error) {
+                            alert("Error: " + error.code + " " + error.message);// The login failed. Check error to see why.
+                        }
+                    });
+                }
+            }
+        });
     }
 });
