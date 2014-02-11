@@ -9,15 +9,7 @@ directory.ShellView = Backbone.View.extend({
     },
 
     events: {
-    },
-
-    search: function (event) {
-    },
-
-    onkeypress: function (event) {
-        if (event.keyCode === 13) { // enter key pressed
-            event.preventDefault();
-        }
+        'click #logoutBtn':'logoutBtnClick',
     },
 
     selectMenuItem: function(menuItem) {
@@ -45,6 +37,19 @@ directory.ShellView = Backbone.View.extend({
     setBackButtonRoute: function(route) {
         console.log("Enable shell backbutton: " + route);
         $('#brand').attr('href', route);
+    },
+
+    logoutBtnClick: function() {
+        console.log("Logging out");
+        promise = [];
+        promise = Parse.User.logOut();
+        Parse.Promise.when(promise).then( function() {
+            if (!Parse.User.current) {
+                alert("Logged out");
+            } else {
+                alert("Couldn't log out");
+            }
+        });
     }
 
 });

@@ -34,6 +34,8 @@ directory.LoginOrRegisterView = Backbone.View.extend({
         user.signUp(null, {
             success: function(user) {
                 alert("signup was successful")
+                //XXX: Create span (with days)
+                directory.createDefaultSpan();
             },
             error: function(user, error) {
                 alert("Error: " + error.code + " " + error.message);
