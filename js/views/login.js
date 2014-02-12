@@ -25,7 +25,6 @@ directory.LoginOrRegisterView = Backbone.View.extend({
 
         user.set("username", username);
         user.set("password", password);
-        user.set("email", "email@example.com");
          
         // other fields can be set just like with Parse.Object
         user.set("phone", "415-392-0202"); //Add new span and day collection here
@@ -34,8 +33,15 @@ directory.LoginOrRegisterView = Backbone.View.extend({
         user.signUp(null, {
             success: function(user) {
                 alert("signup was successful")
-                //XXX: Create span (with days)
-                directory.createDefaultSpan();
+                directory.createDefaultSpan({
+                    success: function() {
+                        console.log("Created default span for " + username);
+                        directory.router.navigate('dashboard', {trigger: true});
+                    },
+                    error: function(message) {
+                        alert("Error " + message);
+                    }
+                });
             },
             error: function(user, error) {
                 alert("Error: " + error.code + " " + error.message);
@@ -43,6 +49,7 @@ directory.LoginOrRegisterView = Backbone.View.extend({
                     Parse.User.logIn(username, password, {
                         success: function(user) {
                             alert("Logged in:" + username);
+                            directory.router.navigate('dashboard', {trigger: true});
                         },
                         error: function(user, error) {
                             alert("Error: " + error.code + " " + error.message);// The login failed. Check error to see why.

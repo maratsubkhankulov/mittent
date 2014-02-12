@@ -4,9 +4,9 @@ directory.DashboardView = Backbone.View.extend({
 
 	spanId: 0,
 
-	initialize: function(id) {
+	initialize: function() {
         //Fetch by snap_id and current day
-		this.spanId = id;
+		this.spanId = this.model.id;
         directory.shellView.setTitle(this.shellTitle);
         directory.shellView.hideBackArrow();
         directory.shellView.setBackButtonRoute("#dashboard");
