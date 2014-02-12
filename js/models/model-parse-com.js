@@ -11,6 +11,14 @@ directory.Span = Parse.Object.extend({
 
 directory.Day = Parse.Object.extend({
     className: "Day"
+
+    /*fetch: function(options) {
+    	if (options.data && options.data.snapId && options.data.date) {
+            var firstNameQuery = new Parse.Query(directory.Employee).contains("firstName", options.data.name);
+            this.query = Parse.Query.or(firstNameQuery, lastNameQuery);
+        }
+        Parse.Collection.prototype.fetch.apply(this, arguments);
+    }*/
 });
 
 directory.DayCollection = Parse.Collection.extend({
@@ -19,13 +27,12 @@ directory.DayCollection = Parse.Collection.extend({
 
     /*fetch: function(options) {
         console.log('custom fetch');
-        if (options.data && options.data.name) {
+        if (options.data && options.data.) {
             var firstNameQuery = new Parse.Query(directory.Employee).contains("firstName", options.data.name);
             var lastNameQuery = new Parse.Query(directory.Employee).contains("lastName", options.data.name);
             this.query = Parse.Query.or(firstNameQuery, lastNameQuery);
         }
         Parse.Collection.prototype.fetch.apply(this, arguments);
-
     }*/
 
 });

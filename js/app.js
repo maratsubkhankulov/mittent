@@ -110,6 +110,29 @@ var directory = {
         var spanId = user.attributes.spanId;
         console.log(spanId);
         return spanId;
+    },
+
+    getDayFromSpanByDate: function(span, date, callbacks) {
+        console.log("getDayFromSpanByDate");
+        console.log(span);
+        span.days.fetch( {
+            success: function(days) {
+                console.log(days);
+                var l = days.length;
+                console.log("getDayFromSpanByDate from " + l + "days");
+                days.each( function(day) {
+                    console.log(day);
+                    console.log("Comparing date strings: " + day.attributes.date + "=" + date + "?");
+                    var date1 = directory.newDate(directory.formatDateStr(day.attributes.date));
+                    var date2 = directory.newDate(date);
+                    //console.log("Comparing date: " + date1 + "=" + date2);
+                    if (date1.getTime() == date2.getTime()) {
+                        console.log(day);
+                        callbacks.success(day);
+                    }
+                });
+            }
+        });
     }
 };
 
@@ -149,7 +172,7 @@ directory.Router = Backbone.Router.extend({
     },
 
     view: function(spanId, date) {
-        // Get spanId associated with publicId, get today's Day id
+        // Get Day associated with given span on a given day and render it
         console.log ("View day with: " + spanId + ", " + date);
         var span = new directory.Span({id: spanId});
         var self = this;
@@ -157,8 +180,7 @@ directory.Router = Backbone.Router.extend({
             success: function(data) {
                 console.log (data);
                 var end = data.attributes.endDate;
-                var day = new directory.Day({id: [data.attributes.id, date]});
-                day.fetch({
+                directory.getDayFromSpanByDate(span, date, {
                     success: function(data) {
                         console.log ("Fetched day");
                         console.log (data);
@@ -202,11 +224,12 @@ directory.Router = Backbone.Router.extend({
         var self = this;
         span.fetch({
             success: function(data) {
+                console.log("preview: successfully fetched span");
                 console.log (data);
                 var end = data.attributes.endDate;
-                var day = new directory.Day({id: [spanId, date]});
-                day.fetch({
+                directory.getDayFromSpanByDate(span, date, {
                     success: function(data) {
+                        console.log("preview: successfully fetched day");
                         console.log (data);
                         directory.previewView = new directory.PreviewView({model: data});
                         directory.previewView.endDate = end;

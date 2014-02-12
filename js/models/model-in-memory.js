@@ -4,7 +4,7 @@ directory.Day = Backbone.Model.extend({
 
     sync: function(method, model, options) {
         if (method === "read") {
-            console.log("Get day: " + this.id[0] + this.id[1]);
+            console.log("Get day: " + options.data.spanId + " " + options.data.date);
             directory.store.findDayByDateAndSpanId(this.id, function (data) {
                 options.success(data);
             });
