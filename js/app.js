@@ -57,21 +57,58 @@ var directory = {
 
     createDefaultSpan: function(callbacks) {
         
+        var promisesPhase1, promise = [];
+
+        console.log("Creating default span");
+
+        //XXX: Use current date
+        var span = new directory.Span({"startDate": "2014-01-08", "endDate": "2014-02-11"});
+
+        var days = 
+        new directory.DayCollection(
+            [
+            {"date": "2014-02-08", "quote": "carpe diem", "author": "Horace", "pic":"img/elder.jpg", "sound":"api.soundcloud.com/tracks/76255568", "viewed":true},
+            {"date": "2014-02-09", "quote": "isn't that the whole point?", "author": "Barack Obama", "pic":"img/corfu2.jpg", "sound":"api.soundcloud.com/tracks/28284290", "viewed":false},
+            {"date": "2014-02-10", "quote": "I know how hard it is for you to put food on your family.", "author": "George Bush", "pic":"img/cow.jpg", "sound":"api.soundcloud.com/tracks/123450519", "viewed":false},
+            {"date": "2014-02-11", "quote": "Imagination is more important than knowledge", "author": "Albert Einstein", "pic":"img/ten.jpg", "sound":"api.soundcloud.com/tracks/20389181", "viewed":false}
+            ]
+        );
+
+        promise.push(span.save());
+
+        Parse.Promise.when(promise).then( function() {
+            days.each(function(day) {
+                day.set("spanId", span.id);
+                day.save( null, {
+                    success: function(span) {
+                        console.log("Day saved");
+                    },
+                    error: function(day, error) {
+                        console.log("failed " + error.code + " " + error.message);
+                        callbacks.error("Error: span could not be saved");
+                    }
+                });
+            });
+        });
+
+        promise.push(Parse.User.logIn('me@podarok.com', 'password'));
+
+        Parse.Promise.when(promise).then( function() {
+            var user = Parse.User.current();
+            user.set("spanId", span.id);
+
+            promise.push(user.save());
+        });
+
+        Parse.Promise.when(promise).then(function() {
+            callbacks.success();
+        });
     },
 
-    getCurrentSpan: function() {
+    getCurrentSpanId: function() {
         var user = Parse.User.current();
-        console.log(user);
-        var spanId = 0;
-        var span = user.relation("span").query().find({
-            success: function(spans) {
-                console.log(spans[0]);
-                return spans[0];
-            },
-            error: function() {
-                console.log("query failed");
-            }
-        });
+        var spanId = user.attributes.spanId;
+        console.log(spanId);
         return spanId;
     }
 };
@@ -143,13 +180,18 @@ directory.Router = Backbone.Router.extend({
     },
 
     dashboard: function() {
-        var span = new directory.Span({id: directory.getCurrentSpan()}); //XXX: with id associated with username
+        var span = new directory.Span({id: directory.getCurrentSpanId()}); //XXX: with id associated with username
         var self = this;
         span.fetch({
             success: function(data) {
-                console.log (data);
+                console.log("Fetched span");
+                console.log(data);
                 directory.dashboardView = new directory.DashboardView({model: data});
+                directory.dashboardView.initialize(directory.getCurrentSpanId());
                 self.$content.html(directory.dashboardView.render().el);
+            },
+            error: function(error) {
+                console.log("Error when fetching span " + error.code);
             }
         });
     },

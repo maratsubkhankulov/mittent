@@ -15,7 +15,8 @@ directory.DashboardView = Backbone.View.extend({
 	},
 
     render: function () {
-    	console.log("The span id: " + this.spanId);
+    	console.log("The span id: " + this.model.id);
+        this.model.attributes.id = this.model.id;
         this.$el.html(this.template(this.model.attributes));
         this.model.days.fetch({
             success:function (data) {
