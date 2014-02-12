@@ -241,9 +241,9 @@ directory.Router = Backbone.Router.extend({
     },
 
     edit: function(spanId, date) {
-        var day = new directory.Day({id: [spanId, date]});
         var self = this;
-        day.fetch({
+        var day = new directory.Day();
+        day.fetch({data: {spanId: spanId, date: date}}, {
             success: function(data) {
                 console.log (data);
                 directory.editView = new directory.EditView({model: data});

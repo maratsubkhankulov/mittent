@@ -10,15 +10,29 @@ directory.Span = Parse.Object.extend({
 });
 
 directory.Day = Parse.Object.extend({
-    className: "Day"
+    className: "Day",
 
-    /*fetch: function(options) {
-    	if (options.data && options.data.snapId && options.data.date) {
-            var firstNameQuery = new Parse.Query(directory.Employee).contains("firstName", options.data.name);
-            this.query = Parse.Query.or(firstNameQuery, lastNameQuery);
+    fetch: function(options, callbacks) {
+    	console.log('Fetch Day by spanId and date');
+    	if (options.data && options.data.spanId && options.data.date) {
+    		console.log('Fetch Day by ' + options.data.spanId + ", " + options.data.date);
+            var myQuery = new Parse.Query(directory.Day).equalTo("spanId", options.data.spanId);
+            myQuery.equalTo("date", options.data.date);
+            myQuery.find({
+            	success: function(results) {
+            		console.log("Successfully retrieved day");
+            		console.log(results);
+            		this.attibutes = results[0].attributes;
+            		callbacks.success(results[0]);
+            	},
+            	error: function(error) {
+            		console.log("Error " + error.code + " " + error.message);
+            	}
+            })
+            //this.query = myQuery;
         }
-        Parse.Collection.prototype.fetch.apply(this, arguments);
-    }*/
+        //Parse.Object.prototype.fetch.apply(this, arguments);
+    }
 });
 
 directory.DayCollection = Parse.Collection.extend({
