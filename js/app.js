@@ -62,15 +62,15 @@ var directory = {
         console.log("Creating default span");
 
         //XXX: Use current date
-        var span = new directory.Span({"startDate": "2014-01-08", "endDate": "2014-02-11"});
+        var span = new directory.Span({"startDate": "2014-1-08", "endDate": "2014-2-11"});
 
         var days = 
         new directory.DayCollection(
             [
-            {"date": "2014-02-08", "quote": "carpe diem", "author": "Horace", "pic":"img/elder.jpg", "sound":"api.soundcloud.com/tracks/76255568", "viewed":true},
-            {"date": "2014-02-09", "quote": "isn't that the whole point?", "author": "Barack Obama", "pic":"img/corfu2.jpg", "sound":"api.soundcloud.com/tracks/28284290", "viewed":false},
-            {"date": "2014-02-10", "quote": "I know how hard it is for you to put food on your family.", "author": "George Bush", "pic":"img/cow.jpg", "sound":"api.soundcloud.com/tracks/123450519", "viewed":false},
-            {"date": "2014-02-11", "quote": "Imagination is more important than knowledge", "author": "Albert Einstein", "pic":"img/ten.jpg", "sound":"api.soundcloud.com/tracks/20389181", "viewed":false}
+            {"date": "2014-2-10", "quote": "carpe diem", "author": "Horace", "pic":"img/elder.jpg", "sound":"api.soundcloud.com/tracks/76255568", "viewed":true},
+            {"date": "2014-2-11", "quote": "isn't that the whole point?", "author": "Barack Obama", "pic":"img/corfu2.jpg", "sound":"api.soundcloud.com/tracks/28284290", "viewed":false},
+            {"date": "2014-2-12", "quote": "I know how hard it is for you to put food on your family.", "author": "George Bush", "pic":"img/cow.jpg", "sound":"api.soundcloud.com/tracks/123450519", "viewed":false},
+            {"date": "2014-2-13", "quote": "Imagination is more important than knowledge", "author": "Albert Einstein", "pic":"img/ten.jpg", "sound":"api.soundcloud.com/tracks/20389181", "viewed":false}
             ]
         );
 
@@ -147,12 +147,19 @@ directory.Router = Backbone.Router.extend({
         "edit/:spanId/:date":   "edit"
     },
 
+    checkLogin: function() {
+        if (!Parse.User.current()) {
+            alert("Not authenticated please log in");
+            this.navigate('', {trigger: true});
+            return false;
+        } else {
+            return true;
+        }
+    },
+
     initialize: function () {
         this.on('all', function(routeEvent) {
-            if (!Parse.User.current()) {
-                alert("logged out");
-                //this.navigate('', {trigger: true});
-            }
+            //
         });
         directory.shellView = new directory.ShellView();
         $('body').html(directory.shellView.render().el);
@@ -202,6 +209,7 @@ directory.Router = Backbone.Router.extend({
     },
 
     dashboard: function() {
+        if (!this.checkLogin()) { return; }
         var span = new directory.Span({id: directory.getCurrentSpanId()}); //XXX: with id associated with username
         var self = this;
         span.fetch({
@@ -219,6 +227,7 @@ directory.Router = Backbone.Router.extend({
     },
 
     preview: function(spanId, date) {
+        if (!this.checkLogin()) { return; }
         console.log("Preview: " + spanId, date);
         var span = new directory.Span({id: spanId});
         var self = this;
@@ -241,6 +250,7 @@ directory.Router = Backbone.Router.extend({
     },
 
     edit: function(spanId, date) {
+        if (!this.checkLogin()) { return; }
         var self = this;
         var day = new directory.Day();
         day.fetch({data: {spanId: spanId, date: date}}, {
@@ -253,9 +263,10 @@ directory.Router = Backbone.Router.extend({
     },
 
     loginOrRegister: function() {
-        if (Parse.User.current()) {
+        if (this.checkLogin()) {
             console.log("Still logged in");
-            //this.navigate('#dashboard', {trigger: true});
+            this.navigate('#dashboard', {trigger: true}); 
+            return;
         }
         directory.loginOrRegisterView = new directory.LoginOrRegisterView();
         this.$content.html(directory.loginOrRegisterView.render().el)

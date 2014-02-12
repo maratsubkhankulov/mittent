@@ -1,6 +1,12 @@
 directory.ShellView = Backbone.View.extend({
 
     initialize: function () {
+        if (Parse.User.current()) {
+            $('#logoutBtn').show();
+        } else {
+            $('#logoutBtn').hide();
+        }
+        //
     },
 
     render: function () {
@@ -46,6 +52,7 @@ directory.ShellView = Backbone.View.extend({
         Parse.Promise.when(promise).then( function() {
             if (!Parse.User.current) {
                 alert("Logged out");
+                //directory.router.navigate('#', {trigger: true});
             } else {
                 alert("Couldn't log out");
             }
