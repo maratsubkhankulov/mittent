@@ -25,5 +25,20 @@ directory.EditView = Backbone.View.extend({
 
     saveBtnClick: function() {
         console.log("SaveBtnClick");
+        var day = this.model;
+        day.set("quote", $('#inputQuote', this.el).val());
+        day.set("author", $('#inputAuthor', this.el).val());
+        day.set("sound", $('#inputSound', this.el).val());
+        day.set("pic", $('#inputPic', this.el).val());
+        day.set("viewed", $('#inputViewed', this.el).is(':checked'));
+        day.save({
+            success: function(day) {
+                console.log("Saved day" + day.attributes.date);
+            },
+            error: function(error) {
+                console.log("Error saving day " + day.id + " " + day.message);
+            }
+        });
+        //{"date": this.dateToString(date), "quote": "carpe diem", "author": "Horace", "pic":"img/elder.jpg", "sound":"api.soundcloud.com/tracks/76255568", "viewed":false, "spanId":spanId});
     }
 });
