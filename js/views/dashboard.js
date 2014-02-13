@@ -40,23 +40,60 @@ directory.DashboardView = Backbone.View.extend({
         var nEnd = directory.newDate($('#inputEndDate').val());
 
         var spanSize = directory.msToDays(end - start) + 1;
-        var nSpanSize = directory.msToDays(nEnd - start) + 1;
+        var nSpanSize = directory.msToDays(nEnd - nStart) + 1;
 
         var spanDifference = nSpanSize - spanSize;
         var startOffset = directory.msToDays(nStart - start);
 
         var days = this.model.days;
+        var shiftedEnd = directory.shiftDate(end, startOffset);
+
+        if (!(start <= end) || !(nStart <= end)) { // Validation
+            alert("Invalid dates");
+            return;
+        }
+
+        if (nSpanSize > directory.spanLimit) {
+            alert("Requested span size is too large. Currently allow up to " + directory.spanLimit);
+            return;
+        }
 
         if (startOffset != 0) { //Shift
             alert("Start date has shifted " + startOffset + "\n shifting days");
             console.log(days);
             days.each(function(day) {
-                day.attributes.date = directory.dateToString(directory.shiftDate(directory.newDate(day.attributes.date), startOffset));
-                console.log("saving day");
-                console.log(day);
+                day.set("date", directory.dateToString(directory.shiftDate(directory.newDate(day.attributes.date), startOffset)));
+                console.log("saving day, new date " + day.attributes.date);
+                day.save();
             });
         }
 
+        if (spanDifference > 0 ) { //Create
+            console.log("Create " + spanDifference + " days");
+            for (var i=1; i <= spanDifference; i++) {
+                var date = directory.shiftDate(shiftedEnd, i);
+                console.log("Creating day " + i + ":" + date);
+                var day = directory.createDefaultDayWithDate(date, this.model.id);
+                console.log(day);
+                day.save();
+                this.model.days.add(day);
+            }
+        } else if (spanDifference < 0) { //Delete
+            console.log("Deleting " + Math.abs(spanDifference) + " days");
+            var l = days.length;
+            for (var i = 0; i > spanDifference; i--) {
+                console.log("Removing day with index " + (l + i));
+                var day = this.model.days.at(l + i - 1);
+                console.log(day);
+                day.destroy();
+                this.model.days.remove(day);
+            }
+        } else { //spanSize has not changed
+        }
+
+        this.model.set("startDate", directory.dateToString(nStart));
+        this.model.set("endDate", directory.dateToString(nEnd));
+        this.model.save();
         /*alert("Updated date\n" + 
                 start + " - " + end + "\n " + 
                 spanSize + " days \n" +
@@ -76,6 +113,7 @@ directory.DayListView = Backbone.View.extend({
     initialize:function () {
         var self = this;
         this.model.on("reset", this.render, this);
+        this.model.on("remove", this.render, this);
         this.model.on("add", function (day) {
             self.$el.append(new directory.DayListItemView({model:day}).render().el);
         });

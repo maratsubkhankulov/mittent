@@ -108,6 +108,12 @@ var directory = {
         });
     },
 
+    spanLimit: 60,
+
+    createDefaultDayWithDate: function(date, spanId) {
+        return new directory.Day({"date": this.dateToString(date), "quote": "carpe diem", "author": "Horace", "pic":"img/elder.jpg", "sound":"api.soundcloud.com/tracks/76255568", "viewed":false, "spanId":spanId});
+    },
+
     getCurrentSpanId: function() {
         var user = Parse.User.current();
         var spanId = user.attributes.spanId;
