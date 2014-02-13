@@ -147,16 +147,6 @@ directory.Router = Backbone.Router.extend({
         "edit/:spanId/:date":   "edit"
     },
 
-    checkLogin: function() {
-        if (!Parse.User.current()) {
-            alert("Not authenticated please log in");
-            this.navigate('', {trigger: true});
-            return false;
-        } else {
-            return true;
-        }
-    },
-
     initialize: function () {
         this.on('all', function(routeEvent) {
             //
@@ -203,13 +193,14 @@ directory.Router = Backbone.Router.extend({
     },
 
     today: function(spanId) {
+        var previewMode = directory.checkLogin();
         var todaysDate = new Date();
         today = directory.dateToString(todaysDate);
         this.view(spanId, today);
     },
 
     dashboard: function() {
-        if (!this.checkLogin()) { return; }
+        if (!directory.checkLogin()) { alert("Not authenticated please log in"); return; }
         var span = new directory.Span({id: directory.getCurrentSpanId()}); //XXX: with id associated with username
         var self = this;
         span.fetch({
@@ -227,7 +218,7 @@ directory.Router = Backbone.Router.extend({
     },
 
     preview: function(spanId, date) {
-        if (!this.checkLogin()) { return; }
+        if (!directory.checkLogin()) { alert("Not authenticated please log in"); return; }
         console.log("Preview: " + spanId, date);
         var span = new directory.Span({id: spanId});
         var self = this;
@@ -250,7 +241,7 @@ directory.Router = Backbone.Router.extend({
     },
 
     edit: function(spanId, date) {
-        if (!this.checkLogin()) { return; }
+        if (!directory.checkLogin()) { alert("Not authenticated please log in"); return; }
         var self = this;
         var day = new directory.Day();
         day.fetch({data: {spanId: spanId, date: date}}, {
@@ -263,7 +254,7 @@ directory.Router = Backbone.Router.extend({
     },
 
     loginOrRegister: function() {
-        if (this.checkLogin()) {
+        if (directory.checkLogin()) {
             console.log("Still logged in");
             this.navigate('#dashboard', {trigger: true}); 
             return;

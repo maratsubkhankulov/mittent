@@ -45,18 +45,11 @@ directory.ShellView = Backbone.View.extend({
         $('#brand').attr('href', route);
     },
 
-    logoutBtnClick: function() {
-        console.log("Logging out");
-        promise = [];
-        promise = Parse.User.logOut();
-        Parse.Promise.when(promise).then( function() {
-            if (!Parse.User.current) {
-                alert("Logged out");
-                //directory.router.navigate('#', {trigger: true});
-            } else {
-                alert("Couldn't log out");
-            }
-        });
-    }
+    showLogoutBtn: function() {
+        $('#logoutBtn', this.el).show();
+    },
 
+    hideLogoutBtn: function() {
+        $('#logoutBtn', this.el).hide();
+    }
 });

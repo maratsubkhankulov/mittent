@@ -10,6 +10,7 @@ directory.DashboardView = Backbone.View.extend({
         directory.shellView.setTitle(this.shellTitle);
         directory.shellView.hideBackArrow();
         directory.shellView.setBackButtonRoute("#dashboard");
+        directory.shellView.showLogoutBtn();
         //XXX: set shell title to Dashboard
         //Load day collection
 	},

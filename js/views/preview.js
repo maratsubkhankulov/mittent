@@ -15,10 +15,11 @@ directory.PreviewView = Backbone.View.extend({
 	},
 
     render: function () {
+        this.$el.html(this.template(this.model.attributes));
+        directory.shellView.showLogoutBtn();
         directory.shellView.setTitle(this.shellTitle + ": " + this.model.attributes.date);
         directory.shellView.showBackArrow();
         directory.shellView.setBackButtonRoute("#dashboard");
-        this.$el.html(this.template(this.model.attributes));
         
         directory.previewTodayView = new directory.TodayView({model: this.model});
         directory.previewTodayView.endDate = this.endDate;

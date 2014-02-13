@@ -50,3 +50,24 @@ directory.DayCollection = Parse.Collection.extend({
     }*/
 
 });
+
+directory.checkLogin = function() {
+    if (!Parse.User.current()) {
+        this.router.navigate('', {trigger: true});
+        return false;
+    } else {
+        return true;
+    }
+}
+
+directory.logoutBtnClick = function() {
+    console.log("Logging out");
+    Parse.User.logOut();
+    var user = Parse.User.current();
+    if (user == null) {
+        alert("Logged out");
+        directory.router.navigate('#', {trigger: true});
+    } else {
+        alert("Couldn't log out");
+    }
+}

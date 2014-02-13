@@ -10,6 +10,7 @@ directory.EditView = Backbone.View.extend({
 	},
 
     render: function () {
+        directory.shellView.showLogoutBtn();
         directory.shellView.setTitle(this.shellTitle + ": " + this.model.attributes.date);
         directory.shellView.showBackArrow();
         directory.shellView.setBackButtonRoute("#preview/" + this.model.attributes.spanId + "/" + this.model.attributes.date);

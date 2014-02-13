@@ -7,7 +7,7 @@ directory.LoginOrRegisterView = Backbone.View.extend({
     },
 
 	initialize: function() {
-        
+        directory.shellView.hideLogoutBtn();
 	},
 
     render: function () {
