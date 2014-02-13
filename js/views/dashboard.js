@@ -4,6 +4,10 @@ directory.DashboardView = Backbone.View.extend({
 
 	spanId: 0,
 
+    events: {
+        'click #updateBtn':'updateBtnClick'
+    },
+
 	initialize: function() {
         //Fetch by snap_id and current day
 		this.spanId = this.model.id;
@@ -26,6 +30,12 @@ directory.DashboardView = Backbone.View.extend({
         });
         $('#days', this.el).append(new directory.DayListView({model:this.model.days}).render().el);
         return this;
+    },
+
+    updateBtnClick: function() {
+        console.log('DashboardView: Update button click ' + $('#inputStartDate').val() + " " + $('#inputEndDate').val());
+        var start = directory.newDate($('#inputStartDate').val());
+        var end = directory.newDate($('#inputEndDate').val());
     }
 });
 

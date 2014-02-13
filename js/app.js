@@ -22,11 +22,7 @@ var directory = {
     },
 
     dateToString: function(date) {
-        var dd = date.getDate();
-        var mm = date.getMonth()+1;
-        var yyyy = date.getFullYear();
-        var out = yyyy + "-" + mm + "-" + dd;
-        return out;
+        return date.toISOString().substring(0, 10);
     },
 
     incrementDate: function(date) {
@@ -195,7 +191,7 @@ directory.Router = Backbone.Router.extend({
     today: function(spanId) {
         var previewMode = directory.checkLogin();
         var todaysDate = new Date();
-        today = directory.dateToString(todaysDate);
+        var today = directory.dateToString(todaysDate);
         this.view(spanId, today);
     },
 

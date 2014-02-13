@@ -6,6 +6,7 @@ directory.Span = Parse.Object.extend({
     initialize: function() {
         this.days = new directory.DayCollection();
         this.days.query = new Parse.Query(directory.Day).equalTo("spanId", this.id);
+        this.days.query.ascending("date");
     }
 });
 
@@ -17,7 +18,7 @@ directory.Day = Parse.Object.extend({
     	if (options.data && options.data.spanId && options.data.date) {
     		console.log('Fetch Day by ' + options.data.spanId + ", " + directory.newDate(options.data.date));
             var myQuery = new Parse.Query(directory.Day).equalTo("spanId", options.data.spanId);
-            myQuery.equalTo("date", options.data.date);
+            myQuery.equalTo("date", directory.newDate(options.data.date));
             myQuery.find({
             	success: function(results) {
             		console.log("Successfully retrieved day");
