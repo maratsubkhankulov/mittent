@@ -51,5 +51,10 @@ directory.ShellView = Backbone.View.extend({
 
     hideLogoutBtn: function() {
         $('#logoutBtn', this.el).hide();
+    },
+
+    logoutBtnClick: function() {
+        directory.logout();
     }
+
 });

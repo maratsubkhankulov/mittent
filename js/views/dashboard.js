@@ -34,8 +34,38 @@ directory.DashboardView = Backbone.View.extend({
 
     updateBtnClick: function() {
         console.log('DashboardView: Update button click ' + $('#inputStartDate').val() + " " + $('#inputEndDate').val());
-        var start = directory.newDate($('#inputStartDate').val());
-        var end = directory.newDate($('#inputEndDate').val());
+        var start = directory.newDate(this.model.attributes.startDate);
+        var end = directory.newDate(this.model.attributes.endDate);
+        var nStart = directory.newDate($('#inputStartDate').val());
+        var nEnd = directory.newDate($('#inputEndDate').val());
+
+        var spanSize = directory.msToDays(end - start) + 1;
+        var nSpanSize = directory.msToDays(nEnd - start) + 1;
+
+        var spanDifference = nSpanSize - spanSize;
+        var startOffset = directory.msToDays(nStart - start);
+
+        var days = this.model.days;
+
+        if (startOffset != 0) { //Shift
+            alert("Start date has shifted " + startOffset + "\n shifting days");
+            console.log(days);
+            days.each(function(day) {
+                day.attributes.date = directory.dateToString(directory.shiftDate(directory.newDate(day.attributes.date), startOffset));
+                console.log("saving day");
+                console.log(day);
+            });
+        }
+
+        /*alert("Updated date\n" + 
+                start + " - " + end + "\n " + 
+                spanSize + " days \n" +
+                nStart + " - " + nEnd + "\n" +
+                nSpanSize + " days \n" +
+                spanDifference + " difference \n" +
+                startOffset + " start offset");*/
+
+        
     }
 });
 

@@ -26,14 +26,16 @@ var directory = {
     },
 
     incrementDate: function(date) {
-        var newDate = new Date(date);
-        newDate.setDate(newDate.getDate() + 1);
-        return new Date(newDate);
+        return this.shiftDate(date, 1);
     },
 
     decrementDate: function(date) {
+        return this.shiftDate(date, -1);
+    },
+
+    shiftDate: function(date, offset) {
         var newDate = new Date(date);
-        newDate.setDate(newDate.getDate() - 1);
+        newDate.setDate(newDate.getDate() + offset);
         return new Date(newDate);
     },
 
@@ -51,6 +53,10 @@ var directory = {
         return today;
     },
 
+    msToDays: function(ms) {
+        return Math.round(ms/1000/60/60/24);;
+    },
+
     createDefaultSpan: function(callbacks) {
         
         var promisesPhase1, promise = [];
@@ -58,15 +64,16 @@ var directory = {
         console.log("Creating default span");
 
         //XXX: Use current date
-        var span = new directory.Span({"startDate": "2014-1-08", "endDate": "2014-2-11"});
+        var today = this.todaysDate();
+        var end = this.shiftDate(today, 2);
+        var span = new directory.Span({"startDate": this.dateToString(today), "endDate": this.dateToString(end)});
 
         var days = 
         new directory.DayCollection(
             [
-            {"date": "2014-2-10", "quote": "carpe diem", "author": "Horace", "pic":"img/elder.jpg", "sound":"api.soundcloud.com/tracks/76255568", "viewed":true},
-            {"date": "2014-2-11", "quote": "isn't that the whole point?", "author": "Barack Obama", "pic":"img/corfu2.jpg", "sound":"api.soundcloud.com/tracks/28284290", "viewed":false},
-            {"date": "2014-2-12", "quote": "I know how hard it is for you to put food on your family.", "author": "George Bush", "pic":"img/cow.jpg", "sound":"api.soundcloud.com/tracks/123450519", "viewed":false},
-            {"date": "2014-2-13", "quote": "Imagination is more important than knowledge", "author": "Albert Einstein", "pic":"img/ten.jpg", "sound":"api.soundcloud.com/tracks/20389181", "viewed":false}
+            {"date": this.dateToString(this.shiftDate(today, 0)), "quote": "carpe diem", "author": "Horace", "pic":"img/elder.jpg", "sound":"api.soundcloud.com/tracks/76255568", "viewed":true},
+            {"date": this.dateToString(this.shiftDate(today, 1)), "quote": "isn't that the whole point?", "author": "Barack Obama", "pic":"img/corfu2.jpg", "sound":"api.soundcloud.com/tracks/28284290", "viewed":false},
+            {"date": this.dateToString(this.shiftDate(today, 2)), "quote": "I know how hard it is for you to put food on your family.", "author": "George Bush", "pic":"img/cow.jpg", "sound":"api.soundcloud.com/tracks/123450519", "viewed":false}
             ]
         );
 

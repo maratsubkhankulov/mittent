@@ -61,7 +61,7 @@ directory.checkLogin = function() {
     }
 }
 
-directory.logoutBtnClick = function() {
+directory.logout = function() {
     console.log("Logging out");
     Parse.User.logOut();
     var user = Parse.User.current();
