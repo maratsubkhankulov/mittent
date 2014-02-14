@@ -85,7 +85,7 @@ var directory = {
         var days = 
         new directory.DayCollection(
             [
-            {"date": this.dateToString(this.shiftDate(today, 0)), "quote": "carpe diem", "author": "Horace", "pic":"img/elder.jpg", "sound":"api.soundcloud.com/tracks/76255568", "viewed":true},
+            {"date": this.dateToString(this.shiftDate(today, 0)), "quote": "carpe diem", "author": "Horace", "pic":"img/elder.jpg", "sound":"api.soundcloud.com/tracks/76255568", "viewed":false},
             {"date": this.dateToString(this.shiftDate(today, 1)), "quote": "isn't that the whole point?", "author": "Barack Obama", "pic":"img/corfu2.jpg", "sound":"api.soundcloud.com/tracks/28284290", "viewed":false},
             {"date": this.dateToString(this.shiftDate(today, 2)), "quote": "I know how hard it is for you to put food on your family.", "author": "George Bush", "pic":"img/cow.jpg", "sound":"api.soundcloud.com/tracks/123450519", "viewed":false}
             ]
@@ -108,7 +108,7 @@ var directory = {
             });
         });
 
-        promise.push(Parse.User.logIn('me@podarok.com', 'password'));
+        //promise.push(Parse.User.logIn('me@podarok.com', 'password'));
 
         Parse.Promise.when(promise).then( function() {
             var user = Parse.User.current();
