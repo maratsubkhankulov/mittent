@@ -74,7 +74,7 @@ directory.logout = function() {
     Parse.User.logOut();
     var user = Parse.User.current();
     if (user == null) {
-        alert("Logged out");
+        //alert("Logged out");
         directory.router.navigate('#', {trigger: true});
     } else {
         alert("Couldn't log out");

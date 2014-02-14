@@ -45,15 +45,15 @@ directory.LoginOrRegisterView = Backbone.View.extend({
                 });
             },
             error: function(user, error) {
-                alert("Error: " + error.code + " " + error.message);
+                //alert("Error: " + error.code + " " + error.message);
                 if (error.code == 202) {
                     Parse.User.logIn(username, password, {
                         success: function(user) {
-                            alert("Logged in:" + username);
+                            //alert("Logged in:" + username);
                             directory.router.navigate('dashboard', {trigger: true});
                         },
                         error: function(user, error) {
-                            alert("Error: " + error.code + " " + error.message);// The login failed. Check error to see why.
+                            //alert("Error: " + error.code + " " + error.message);// The login failed. Check error to see why.
                         }
                     });
                 }

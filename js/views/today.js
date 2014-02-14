@@ -13,8 +13,9 @@ directory.TodayView = Backbone.View.extend({
 
         console.log("Preview mode? " + this.previewMode);
         if (this.previewMode) {
+            $('body').css('backgroundImage', 'url(' + this.model.attributes.pic + ')');
             this.$el.html(this.template(this.model.attributes));
-            alert("This is preview mode, page can be viewed many times");
+            //alert("This is preview mode, page can be viewed many times");
         } else {
             if (!this.model.attributes.viewed) {
                 this.$el.html(this.template(this.model.attributes));
