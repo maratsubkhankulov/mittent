@@ -8,6 +8,16 @@ var directory = {
 
         var deferreds = [];
 
+        $.get('tpl/' + "DayNotFoundView" + '.html', function(data) {
+            directory.dayNotFoundTemplate = data;
+            console.log(data);
+        }, 'html');
+
+        $.get('tpl/' + "BeenSeenView" + '.html', function(data) {
+            directory.beenSeenTemplate = data;
+            console.log(data);
+        }, 'html');
+
         $.each(views, function(index, view) {
             if (directory[view]) {
                 deferreds.push($.get('tpl/' + view + '.html', function(data) {
@@ -56,6 +66,10 @@ var directory = {
     msToDays: function(ms) {
         return Math.round(ms/1000/60/60/24);;
     },
+
+    dayNotFoundTemplate: "",
+
+    beenSeenView: "",
 
     createDefaultSpan: function(callbacks) {
         
@@ -129,6 +143,7 @@ var directory = {
                 console.log(days);
                 var l = days.length;
                 console.log("getDayFromSpanByDate from " + l + "days");
+                var found = false;
                 days.each( function(day) {
                     console.log(day);
                     console.log("Comparing date strings: " + day.attributes.date + "=" + date + "?");
@@ -138,9 +153,17 @@ var directory = {
                     if (date1.getTime() == date2.getTime()) {
                         console.log(day);
                         callbacks.success(day);
+                        found = true;
+                        return;
                     }
                 });
+                if (!found) { callbacks.error(); }
+            },
+
+            error: function() {
+                alert("Can't get days of specified span");
             }
+
         });
     }
 };
@@ -177,7 +200,7 @@ directory.Router = Backbone.Router.extend({
         this.$content.html(directory.homelView.el);
     },
 
-    view: function(spanId, date) {
+    view: function(spanId, date, mode) {
         // Get Day associated with given span on a given day and render it
         console.log ("View day with: " + spanId + ", " + date);
         var span = new directory.Span({id: spanId});
@@ -188,28 +211,38 @@ directory.Router = Backbone.Router.extend({
                 var end = data.attributes.endDate;
                 directory.getDayFromSpanByDate(span, date, {
                     success: function(data) {
-                        console.log ("Fetched day");
                         console.log (data);
                         console.log("Today is: " + date + "End date is: " + end);
-                        directory.todayView = new directory.TodayView({model: data, endDate: end});
+                        directory.todayView = new directory.TodayView({model: data});
                         directory.todayView.endDate = end;
+                        directory.todayView.previewMode = mode;
                         $('body').html(directory.todayView.render().el);
                         self.$content = $("#content");
+                    },
+
+                    error: function() {
+                        self.$content.html(directory.dayNotFoundTemplate);
                     }
                 });
+            },
+
+            error: function() {
+                alert("Oops! The page you're looking for doesn't exist.");
+                self.navigate('', {trigger: true});
+                return;
             }
         });
     },
 
     today: function(spanId) {
-        var previewMode = directory.checkLogin();
-        var todaysDate = new Date();
+        var previewMode = directory.checkLoginToThisSpan(spanId);
+        var todaysDate = directory.todaysDate();
         var today = directory.dateToString(todaysDate);
-        this.view(spanId, today);
+        this.view(spanId, today, previewMode);
     },
 
     dashboard: function() {
-        if (!directory.checkLogin()) { alert("Not authenticated please log in"); return; }
+        if (!directory.checkLogin()) { alert("Not authenticated please log in"); directory.router.navigate('', {trigger: true}); return; }
         var span = new directory.Span({id: directory.getCurrentSpanId()}); //XXX: with id associated with username
         var self = this;
         span.fetch({
@@ -227,7 +260,7 @@ directory.Router = Backbone.Router.extend({
     },
 
     preview: function(spanId, date) {
-        if (!directory.checkLogin()) { alert("Not authenticated please log in"); return; }
+        if (!directory.checkLogin()) { alert("Not authenticated please log in"); directory.router.navigate('', {trigger: true}); return; }
         console.log("Preview: " + spanId, date);
         var span = new directory.Span({id: spanId});
         var self = this;
@@ -243,6 +276,11 @@ directory.Router = Backbone.Router.extend({
                         directory.previewView = new directory.PreviewView({model: data});
                         directory.previewView.endDate = end;
                         self.$content.html(directory.previewView.render().el);
+                    },
+
+                    error: function() {
+                        alert("Preview: could not fetch day for this date");
+                        window.history.back();
                     }
                 });
             }
@@ -250,7 +288,7 @@ directory.Router = Backbone.Router.extend({
     },
 
     edit: function(spanId, date) {
-        if (!directory.checkLogin()) { alert("Not authenticated please log in"); return; }
+        if (!directory.checkLogin()) { alert("Not authenticated please log in"); directory.router.navigate('', {trigger: true}); return; }
         var self = this;
         var day = new directory.Day();
         day.fetch({data: {spanId: spanId, date: date}}, {
@@ -265,7 +303,7 @@ directory.Router = Backbone.Router.extend({
     loginOrRegister: function() {
         if (directory.checkLogin()) {
             console.log("Still logged in");
-            this.navigate('#dashboard', {trigger: true}); 
+            this.navigate('dashboard', {trigger: true}); 
             return;
         }
         directory.loginOrRegisterView = new directory.LoginOrRegisterView();

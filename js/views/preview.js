@@ -23,6 +23,7 @@ directory.PreviewView = Backbone.View.extend({
         
         directory.previewTodayView = new directory.TodayView({model: this.model});
         directory.previewTodayView.endDate = this.endDate;
+        directory.previewTodayView.previewMode = true;
         $('#previewContent', this.el).append(directory.previewTodayView.render().el);
         return this;
     },

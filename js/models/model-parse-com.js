@@ -54,10 +54,18 @@ directory.DayCollection = Parse.Collection.extend({
 
 directory.checkLogin = function() {
     if (!Parse.User.current()) {
-        this.router.navigate('', {trigger: true});
         return false;
     } else {
         return true;
+    }
+}
+
+directory.checkLoginToThisSpan = function(spanId) {
+	var user = Parse.User.current();
+	if (!user) {
+        return false;
+    } else {
+        return user.attributes.spanId == spanId;
     }
 }
 

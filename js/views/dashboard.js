@@ -22,6 +22,12 @@ directory.DashboardView = Backbone.View.extend({
     render: function () {
     	console.log("The span id: " + this.model.id);
         this.model.attributes.id = this.model.id;
+        var hostname = window.location.hostname;
+        var port = "";
+        if (hostname == "localhost") {
+            port = ":"+window.location.port;
+        }
+        this.model.attributes.url = window.location.protocol+"//"+hostname+port+window.location.pathname;
         this.$el.html(this.template(this.model.attributes));
         this.model.days.fetch({
             success:function (data) {
@@ -48,7 +54,7 @@ directory.DashboardView = Backbone.View.extend({
         var days = this.model.days;
         var shiftedEnd = directory.shiftDate(end, startOffset);
 
-        if (!(start <= end) || !(nStart <= end)) { // Validation
+        if (!(start <= end) || !(nStart <= nEnd)) { // Validation
             alert("Invalid dates");
             return;
         }
