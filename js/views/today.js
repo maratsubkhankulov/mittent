@@ -9,7 +9,7 @@ directory.TodayView = Backbone.View.extend({
         console.log((new Date(this.endDate)).getDate());
         console.log((new Date(this.model.attributes.date)).getDate());
 
-        this.model.attributes.daysLeft = (new Date(this.endDate)).getDate() - (new Date(this.model.attributes.date)).getDate() + 1;
+        this.model.attributes.daysLeft = directory.msToDays(directory.newDate(this.endDate) - directory.newDate(this.model.attributes.date)) + 1;
 
         console.log("Preview mode? " + this.previewMode);
         if (this.previewMode) {
