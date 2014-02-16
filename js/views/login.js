@@ -1,6 +1,6 @@
 directory.LoginOrRegisterView = Backbone.View.extend({
 
-    shellTitle: "Podarok",
+    shellTitle: "Login",
 
     events: {
         "click #goBtn":"goBtnClick",
@@ -33,7 +33,7 @@ directory.LoginOrRegisterView = Backbone.View.extend({
         var self = this;
         user.signUp(null, {
             success: function(user) {
-                alert("signup was successful")
+                alert("Signup was successful")
                 directory.createDefaultSpan({
                     success: function() {
                         console.log("Created default span for " + username);
@@ -53,7 +53,7 @@ directory.LoginOrRegisterView = Backbone.View.extend({
                             directory.router.navigate('dashboard', {trigger: true});
                         },
                         error: function(user, error) {
-                            //alert("Error: " + error.code + " " + error.message);// The login failed. Check error to see why.
+                            alert("Login failed for this combination of username and password");// The login failed. Check error to see why.
                         }
                     });
                 }
