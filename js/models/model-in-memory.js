@@ -12,34 +12,6 @@ directory.Day = Backbone.Model.extend({
     }
 });
 
-directory.DayCollection = Backbone.Collection.extend({
-
-    model: directory.Day,
-
-    sync: function(method, model, options) {
-        if (method === "read") {
-            directory.store.findDaysBySpanId(this.parent.id, function (data) {
-                options.success(data);
-            });
-        }
-    }
-
-});
-
-directory.Span = Backbone.Model.extend({
-    initialize:function () {
-        this.days = new directory.DayCollection();
-        this.days.parent = this;
-    },
-
-    sync: function(method, model, options) {
-        if (method === "read") {
-            directory.store.findSpanById(this.id, function (data) {
-                options.success(data);
-            });
-        }
-    }
-});
 
 directory.MemoryStore = function (successCallback, errorCallback) {
 
