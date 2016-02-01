@@ -1,12 +1,11 @@
 directory.ShellView = Backbone.View.extend({
 
     initialize: function () {
-        if (Parse.User.current()) {
+        /*if (Parse.User.current()) {
             $('#logoutBtn').show();
         } else {
             $('#logoutBtn').hide();
-        }
-        //
+        }*/
     },
 
     render: function () {

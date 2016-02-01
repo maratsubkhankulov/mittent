@@ -1,3 +1,27 @@
+directory.Entry = Backbone.Model.extend({
+    initialize:function () {
+    },
+
+    sync: function(method, model, options) {
+        if (method === "create") {
+            console.log("Get log entry: " + options.data);
+            directory.store.findDayByDateAndSpanId(this.id, function (data) {
+                options.success(data);
+            });
+        }
+    }
+});
+
+directory.EntryCollection = Backbone.Collection.extend({
+    model: directory.Entry,
+
+    sync: function(method, model, options) {
+        if (method === "read") {
+            options.success(directory.store.logEntries);
+        }
+    }
+});
+
 directory.Day = Backbone.Model.extend({
     initialize:function () {
     },
@@ -11,7 +35,6 @@ directory.Day = Backbone.Model.extend({
         }
     }
 });
-
 
 directory.MemoryStore = function (successCallback, errorCallback) {
 
@@ -90,7 +113,13 @@ directory.MemoryStore = function (successCallback, errorCallback) {
         {"id": "xz5yra", "startDate": "2014-01-08", "endDate": "2014-02-11", "publicId":"xz5yra"},
         {"id": "asdfasd", "startDate": "2014-02-03", "endDate": "2014-02-10", "publicId":"asdfasd"},
         {"id": "234dfsd", "startDate": "2014-02-15", "endDate": "2014-02-20", "publicId":"234dfsd"}
-    ]
+    ];
+
+    this.logEntries = [
+        {"id": "1", "datetime": "2016-02-01 20:00", "comment": "Papa John's Pizza"},
+        {"id": "2", "datetime": "2016-02-01 14:00", "comment": "Mixed grain salad"},
+        {"id": "3", "datetime": "2016-02-02 19:00", "comment": "Steamed tofu"}
+    ];
 
     callLater(successCallback);
 
