@@ -36,6 +36,12 @@ directory.Day = Backbone.Model.extend({
 
 directory.MemoryStore = function (successCallback, errorCallback) {
 
+    this.load = function (logEntryCollection) {
+        _.each(this.logEntries, function(entry) {
+            logEntryCollection.create(entry);
+        });
+    }
+
     this.findById = function (id, callback) {
         var days = this.days;
         var day = null;
@@ -120,7 +126,7 @@ directory.MemoryStore = function (successCallback, errorCallback) {
     ];
 
     callLater(successCallback);
-
 };
 
 directory.store = new directory.MemoryStore();
+
