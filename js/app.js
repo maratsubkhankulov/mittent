@@ -102,6 +102,7 @@ $(document).on("ready", function () {
         function () {
 			console.log("ready!");
             directory.router = new directory.Router();
+            directory.logEntriesCollection = new directory.EntryCollection();
             Backbone.history.start();
         });
 });

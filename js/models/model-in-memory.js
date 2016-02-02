@@ -4,10 +4,8 @@ directory.Entry = Backbone.Model.extend({
 
     sync: function(method, model, options) {
         if (method === "create") {
-            console.log("Get log entry: " + options.data);
-            directory.store.findDayByDateAndSpanId(this.id, function (data) {
-                options.success(data);
-            });
+            console.log("Create: log entry in memory: " + options.data);
+            directory.store.logEntries.push(model.toJSON());
         }
     }
 });
