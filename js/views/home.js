@@ -11,7 +11,8 @@ directory.HomeView = Backbone.View.extend({
 
     logMeal: function() {
         console.log("Log meal button pressed");
-        var datetime = $("#inputTimeAndDate", this.el).val();
+        var datetime = $("#inputDatetime", this.el).val();
+        console.log(datetime);
         var comment = $("#inputComment", this.el).val();
         if (comment === "" || datetime === "") {
             console.log("one or more fields are empty");

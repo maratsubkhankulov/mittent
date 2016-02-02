@@ -4,7 +4,7 @@ directory.Entry = Backbone.Model.extend({
 
     sync: function(method, model, options) {
         if (method === "create") {
-            console.log("Create: log entry in memory: " + options.data);
+            console.log("Create: log entry in memory: " + model.toJSON());
             directory.store.logEntries.push(model.toJSON());
         }
     }
@@ -120,9 +120,9 @@ directory.MemoryStore = function (successCallback, errorCallback) {
     ];
 
     this.logEntries = [
-        {"id": "1", "datetime": "2016-02-01 20:00", "comment": "Papa John's Pizza"},
-        {"id": "2", "datetime": "2016-02-01 14:00", "comment": "Mixed grain salad"},
-        {"id": "3", "datetime": "2016-02-02 19:00", "comment": "Steamed tofu"}
+        {"id": "1", "datetime": "01/02/2016 20:00 PM", "comment": "Papa John's Pizza"},
+        {"id": "2", "datetime": "02/02/2016 14:00 PM", "comment": "Mixed grain salad"},
+        {"id": "3", "datetime": "02/02/2016 20:15 PM", "comment": "Steamed tofu"}
     ];
 
     callLater(successCallback);
