@@ -1,9 +1,0 @@
-<h3>Historical</h3>
-<table class="table table-striped" id="content">
-   <thead>
-    <tr>
-       <th>Date &amp; time</th>
-       <th>Comment</th>
-    </tr>
-   </thead>
-</table>
