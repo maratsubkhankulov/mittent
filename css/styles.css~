@@ -1,0 +1,15 @@
+body {
+    font-family: source-sans-pro, sans-serif;
+    font-size: 15px;
+    /*padding-top: 60px;*/
+    /*padding-bottom: 40px;*/
+	/*background-size:100% 100%;*/
+	background-repeat:no-repeat;
+	background-attachment:fixed;
+	background-position:center; 
+	background-size:auto;
+}
+
+.no-reports {
+    display: none;
+}
