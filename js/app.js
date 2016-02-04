@@ -48,6 +48,7 @@ directory.Router = Backbone.Router.extend({
             directory.homeView.delegateEvents(); // delegate events when the view is recycled
         }
         this.$content.html(directory.homeView.el);
+        directory.homeView.drawGraph();
     }
 });
 
