@@ -48,6 +48,7 @@ directory.Router = Backbone.Router.extend({
             directory.homeView.delegateEvents(); // delegate events when the view is recycled
         }
         this.$content.html(directory.homeView.el);
+        directory.logEntriesCollection.initialize();
         directory.homeView.drawGraph();
     }
 });
@@ -58,8 +59,6 @@ $(document).on("ready", function () {
 			console.log("ready!");
             directory.router = new directory.Router();
             directory.logEntriesCollection = new directory.EntryCollection();
-            //For use with in-memory model
-            //directory.store.load(directory.logEntriesCollection);
             Backbone.history.start();
         });
 });

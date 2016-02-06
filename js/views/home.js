@@ -20,11 +20,8 @@ directory.HomeView = Backbone.View.extend({
             console.log("one or more fields are empty");
             return;
         }
-        console.log("Time and date: " + datetime);
-        console.log("Comment: " + comment);
         //Create a new log entry
         var entry = directory.logEntriesCollection.create({"datetime": datetime, "comment": comment});
-        console.log(directory.logEntriesCollection);
         //Refresh log table
         this.logView.render();
     },

@@ -13,6 +13,10 @@ directory.Entry = Backbone.Model.extend({
 directory.EntryCollection = Backbone.Collection.extend({
     model: directory.Entry,
 
+    initialize: function() {
+        directory.store.load(this);
+    },
+
     sync: function(method, model, options) {
         if (method === "read") {
             options.success(directory.store.logEntries);
@@ -36,9 +40,9 @@ directory.Day = Backbone.Model.extend({
 
 directory.MemoryStore = function (successCallback, errorCallback) {
 
-    this.load = function (logEntryCollection) {
+    this.load = function (log) {
         _.each(this.logEntries, function(entry) {
-            logEntryCollection.create(entry);
+            log.create(entry);
         });
     }
 
@@ -129,4 +133,3 @@ directory.MemoryStore = function (successCallback, errorCallback) {
 };
 
 directory.store = new directory.MemoryStore();
-
