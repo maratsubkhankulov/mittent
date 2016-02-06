@@ -8,10 +8,8 @@ directory.LogView = Backbone.View.extend({
 
         //For use with in-memory model
         _.each(this.model.models, function (entry) {
-            console.log("Each entry:" + entry);
             this.addOne(entry);
         }, this);
-
         
         return this;
     },
