@@ -1,14 +1,25 @@
 directory.LogView = Backbone.View.extend({
-    
-    render:function () {
-        console.log("LogView render");
+    initialize: function() {
         this.$el.html(this.template());
+        this.list = $("#log-list", this.$el);
 
-        _.each(this.model.models, function (entry) {
-            var entryView = new directory.LogEntryView({model: entry}).render().el;
-            $('#content', this.$el).append(entryView);
-        }, this);
+        this.listenTo(this.model, 'add', this.addOne);
+    },
+    
+    render: function () {
+        console.log("LogView render");
+
+        //For use with in-memory model
+        /*_.each(this.model.models, function (entry) {
+            console.log("Each entry:" + entry);
+            this.addOne(entry);
+        }, this);*/
         
         return this;
+    },
+
+    addOne: function(entry) {
+        var view = new directory.LogEntryView({model: entry});
+        this.list.append(view.render().el);
     }
 });

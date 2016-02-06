@@ -58,7 +58,8 @@ $(document).on("ready", function () {
 			console.log("ready!");
             directory.router = new directory.Router();
             directory.logEntriesCollection = new directory.EntryCollection();
-            directory.store.load(directory.logEntriesCollection);
+            //For use with in-memory model
+            //directory.store.load(directory.logEntriesCollection);
             Backbone.history.start();
         });
 });
