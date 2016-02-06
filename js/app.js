@@ -53,7 +53,7 @@ directory.Router = Backbone.Router.extend({
 });
 
 $(document).on("ready", function () {
-    directory.loadTemplates(["HomeView", "ShellView", "StatsView", "LogView", "LogEntryView"],
+    directory.loadTemplates(["HomeView", "ShellView", "StatsView", "LogView", "LogEntryView", "GraphView"],
         function () {
 			console.log("ready!");
             directory.router = new directory.Router();
