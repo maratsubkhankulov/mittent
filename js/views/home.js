@@ -23,7 +23,6 @@ directory.HomeView = Backbone.View.extend({
     logMeal: function() {
         console.log("Log meal button pressed");
         var datetime = $("#datetimepicker", this.el).data("DateTimePicker").viewDate().toISOString();
-        console.log(datetime);
         var comment = $("#inputComment", this.el).val();
         if (comment === "" || datetime === "") {
             console.log("one or more fields are empty");
@@ -33,9 +32,11 @@ directory.HomeView = Backbone.View.extend({
         var entry = directory.logEntriesCollection.create({"datetime": datetime, "comment": comment});
         //Refresh log table
         this.logView.render();
+        this.drawGraph();
     },
 
     drawGraph: function() {
+        this.graphView.render();
         this.graphView.drawGraph();
     }
 });

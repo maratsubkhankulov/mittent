@@ -1,7 +1,10 @@
 directory.GraphView = Backbone.View.extend({
     
+    eatingIdx : 0,
+    fastingIdx : 1,
+
     initialize: function() {
-        this.initBarChartData();
+        //this.initBarChartData();
 
         this.listenTo(this.model, 'add',  this.updateGraph);
         this.listenTo(this.model, 'remove', this.updateGraph);
@@ -12,16 +15,78 @@ directory.GraphView = Backbone.View.extend({
         return this;
     },
 
-    updateGraph: function() {
+    updateChartData: function() {
         console.log("update chart");
-        // Build up the dataset
-        //
-        // 1. Calculate date range - how many days to render?
-        var min = this.model.models[0].attributes.datetime;
-        // Find min date
-        _.each(this.model.models, function(entry) {});
-            
-        
+        // Init chart data
+        var b_data = {
+            labels: [],
+            datasets: []
+        }
+        // Init vars
+        var entries = this.model.models;
+        if (entries.length == 0) {
+            console.log("No log entries to graph");
+            return;
+        }
+        var min = moment(entries[entries.length - 1].get('datetime'));
+        var max = moment(entries[0].get('datetime'));
+        var numDays = max.diff(min, 'd') + 1;
+
+        // Label days in range
+        var date = min;
+        for (i = 0; i<=numDays; i++) {
+            b_data.labels.push(date.format('DD/MM/YY'));
+            min.add(1, 'd');
+        }
+
+        // Populate data per day
+
+        // Eating
+        b_data.datasets.push(
+            {
+                fillColor : "rgba(220,20,220,0.5)",
+                strokeColor : "rgba(220,20,220,0.8)",
+                highlightFill: "rgba(220,20,220,0.75)",
+                highlightStroke: "rgba(220,20,220,1)",
+                data : []
+            }
+        );
+        // Fasting
+        b_data.datasets.push(
+            {
+                fillColor : "rgba(220,220,220,0.5)",
+                strokeColor : "rgba(220,220,220,0.8)",
+                highlightFill: "rgba(220,220,220,0.75)",
+                highlightStroke: "rgba(220,220,220,1)",
+                data : []
+            }
+        );
+
+        // Push eating data
+        var eat_data = [];
+        // Init
+        for (var i = 0; i<=numDays; i++) {
+            eat_data.push(0);
+        }
+        // Count number of meals per day
+        var date = min;
+        _.each(entries, function(entry) {
+            var current = moment(entry.get('datetime'));
+            var idx = min.diff(current,'d') - 1;
+            console.log("idx: " + idx + ", val: " + eat_data[idx]); 
+            eat_data[idx] += 3;
+        });
+
+        // Push fasting data
+        var fast_data = [];
+        for (var i = 0; i<=numDays; i++) {
+            fast_data.push(24 - eat_data[i]);
+        }
+
+        b_data.datasets[this.eatingIdx].data = eat_data;
+        b_data.datasets[this.fastingIdx].data = fast_data;
+
+        this.barChartData = b_data;
     },
 
     initBarChartData:function() {
@@ -81,8 +146,7 @@ directory.GraphView = Backbone.View.extend({
 		var ctx = $("#canvas", this.el)[0].getContext("2d");
         ctx.fillStyle = "#FF0000";
         ctx.fillRect(0,0,150,75);
-        console.log($("#canvas", this.el)[0]);
-        console.log(this.barChartData);
+        this.updateChartData();
 		this.myBar = new Chart(ctx).StackedBar(this.barChartData, {
 			responsive : true
 		});

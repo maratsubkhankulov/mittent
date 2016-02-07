@@ -21,6 +21,10 @@ directory.EntryCollection = Backbone.Collection.extend({
         if (method === "read") {
             options.success(directory.store.logEntries);
         }
+    },
+
+    comparator: function(m) {
+        return -moment(m.get('datetime'));
     }
 });
 
@@ -111,9 +115,10 @@ directory.MemoryStore = function (successCallback, errorCallback) {
     }
 
     this.logEntries = [
-        {"id": "1", "datetime": "2016-02-10T14:36:09.056Z", "comment": "Papa John's Pizza"},
-        {"id": "2", "datetime": "2016-02-10T14:36:09.056Z", "comment": "Mixed grain salad"},
-        {"id": "3", "datetime": "2016-02-10T14:36:09.056Z", "comment": "Steamed tofu"}
+        {"id": "4", "datetime": "2016-03-07T20:50:09.056Z", "comment": "Papa John's Pizza"},
+        {"id": "7", "datetime": "2016-02-10T14:36:09.056Z", "comment": "Mixed grain salad"},
+        {"id": "2", "datetime": "2016-02-11T17:00:09.056Z", "comment": "Steamed tofu"},
+        {"id": "5", "datetime": "2016-03-11T10:00:09.056Z", "comment": "Coffee"}
     ];
 
     callLater(successCallback);
