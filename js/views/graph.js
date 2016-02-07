@@ -2,19 +2,26 @@ directory.GraphView = Backbone.View.extend({
     
     initialize: function() {
         this.initBarChartData();
+
+        this.listenTo(this.model, 'add',  this.updateGraph);
+        this.listenTo(this.model, 'remove', this.updateGraph);
     },
 
-    render:function () {
+    render: function () {
         this.$el.html(this.template());
         return this;
     },
 
-    randomScalingFactor:function() {
-        return Math.round(Math.random()*100);
-    },
-
-    randomColorFactor:function() {
-        return Math.round(Math.random()*255);
+    updateGraph: function() {
+        console.log("update chart");
+        // Build up the dataset
+        //
+        // 1. Calculate date range - how many days to render?
+        var min = this.model.models[0].attributes.datetime;
+        // Find min date
+        _.each(this.model.models, function(entry) {});
+            
+        
     },
 
     initBarChartData:function() {
@@ -27,13 +34,29 @@ directory.GraphView = Backbone.View.extend({
                     highlightFill: "rgba(220,220,220,0.75)",
                     highlightStroke: "rgba(220,220,220,1)",
                     data : [
-                        this.randomScalingFactor(),
-                        this.randomScalingFactor(),
-                        this.randomScalingFactor(),
-                        this.randomScalingFactor(),
-                        this.randomScalingFactor(),
-                        this.randomScalingFactor(),
-                        this.randomScalingFactor()]
+                        2,
+                        2,
+                        2,
+                        2,
+                        2,
+                        0,
+                        2
+                    ]
+                },
+                {
+                    fillColor : "rgba(0,220,220,0.5)",
+                    strokeColor : "rgba(220,220,220,0.8)",
+                    highlightFill: "rgba(220,220,220,0.75)",
+                    highlightStroke: "rgba(220,220,220,1)",
+                    data : [
+                        23,
+                        23,
+                        23,
+                        23,
+                        23,
+                        25,
+                        23
+                    ]
                 },
                 {
                     fillColor : "rgba(240,73,73,0.5)",
@@ -41,13 +64,13 @@ directory.GraphView = Backbone.View.extend({
                     highlightFill : "rgba(240,73,73,0.75)",
                     highlightStroke : "rgba(240,73,73,1)",
                     data : [
-                        this.randomScalingFactor(),
-                        this.randomScalingFactor(),
-                        this.randomScalingFactor(),
-                        this.randomScalingFactor(),
-                        this.randomScalingFactor(),
-                        this.randomScalingFactor(),
-                        this.randomScalingFactor()
+                        1,
+                        1,
+                        1,
+                        1,
+                        1,
+                        1,
+                        1
                     ]
                 }
             ]

@@ -11,7 +11,7 @@ directory.LogView = Backbone.View.extend({
         _.each(this.model.models, function (entry) {
             this.addOne(entry);
         }, this);
-        
+
         return this;
     },
 
