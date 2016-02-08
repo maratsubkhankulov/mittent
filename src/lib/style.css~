@@ -1,0 +1,4 @@
+//Fix for bootstrap and chartjs issue
+.canvas-holder .canvas {
+    width: 600px;
+}
