@@ -37,7 +37,7 @@ directory.GraphBarView = Backbone.View.extend({
         for (var i = 0; i < 24; i++) {
             var segmentView = new directory.GraphSegmentView({
                     model: {
-                        style: "info",
+                        style: "success",
                         percentage: "4.1666"
                     }
                 });
@@ -67,12 +67,13 @@ directory.GraphView = Backbone.View.extend({
     },
 
     updateGraph: function() {
-        this.initialize();
-        this.render();
+        //this.initialize();
+        //this.render();
     },
 
     initBarChart: function() {
         // Init vars
+
         var entries = this.model.models;
         if (entries.length == 0) {
             console.log("No log entries to graph");
@@ -89,7 +90,7 @@ directory.GraphView = Backbone.View.extend({
         for (i = 0; i<=numDays; i++) {
             var view = new directory.GraphBarView({
                 model: {
-                    datetime: date.format('ddd Do MMM YY HH:MM')
+                    datetime: date.format('ddd Do MMM')
                 }
             });
             this.barViews.push(view);
@@ -123,7 +124,7 @@ directory.GraphView = Backbone.View.extend({
 
     colourSlot: function(barIdx, segmentIdx, style) {
         var segmentView = this.barViews[barIdx].segmentViews[segmentIdx];
-        segmentView.model.style = "danger";
+        segmentView.model.style = "warning";
         segmentView.render();
         this.barViews[barIdx].render();
     },

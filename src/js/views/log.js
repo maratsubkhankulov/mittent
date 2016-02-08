@@ -2,6 +2,7 @@ directory.LogView = Backbone.View.extend({
     initialize: function() {
         this.listenTo(this.model, 'add', this.addOne);
         this.listenTo(this.model, 'remove', this.render);
+        this.listenTo(this.model, 'sort', this.render);
     },
     
     render: function () {

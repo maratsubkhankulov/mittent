@@ -116,8 +116,8 @@ directory.MemoryStore = function (successCallback, errorCallback) {
 
     this.logEntries = [
         {"id": "4", "datetime": "2016-02-07T20:50:09.056Z", "comment": "Papa John's Pizza"},
-        {"id": "7", "datetime": "2016-02-07T14:36:09.056Z", "comment": "Mixed grain salad"},
         {"id": "2", "datetime": "2016-02-08T17:00:09.056Z", "comment": "Steamed tofu"},
+        {"id": "7", "datetime": "2016-02-07T14:36:09.056Z", "comment": "Mixed grain salad"},
         {"id": "5", "datetime": "2016-02-08T10:00:09.056Z", "comment": "Coffee"}
     ];
 
