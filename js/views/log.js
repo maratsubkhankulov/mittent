@@ -7,7 +7,6 @@ directory.LogView = Backbone.View.extend({
     render: function () {
         this.$el.html(this.template());
 
-
         //For use with in-memory model
         _.each(this.model.models, function (entry) {
             this.addOne(entry);

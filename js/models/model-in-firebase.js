@@ -8,6 +8,11 @@ directory.Entry = Backbone.Model.extend({
 // Create a Firebase.Collection and set the 'firebase' property
 // to the URL of our database
 directory.EntryCollection = Backbone.Firebase.Collection.extend({
-  model: directory.Entry,
-  url: "https://mittent.firebaseio.com"
+    model: directory.Entry,
+
+    url: "https://mittent.firebaseio.com",
+
+    comparator: function(m) {
+        return -moment(m.get('datetime'));
+    }
 });
