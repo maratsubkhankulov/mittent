@@ -39,52 +39,60 @@ directory.GraphView = Backbone.View.extend({
             min.add(1, 'd');
         }
 
-        // Populate data per day
+        // Create data grid
 
-        // Eating
-        b_data.datasets.push(
-            {
-                fillColor : "rgba(220,20,220,0.5)",
-                strokeColor : "rgba(220,20,220,0.8)",
-                highlightFill: "rgba(220,20,220,0.75)",
-                highlightStroke: "rgba(220,20,220,1)",
-                data : []
-            }
-        );
-        // Fasting
-        b_data.datasets.push(
-            {
-                fillColor : "rgba(220,220,220,0.5)",
-                strokeColor : "rgba(220,220,220,0.8)",
-                highlightFill: "rgba(220,220,220,0.75)",
-                highlightStroke: "rgba(220,220,220,1)",
-                data : []
-            }
-        );
-
-        // Push eating data
-        var eat_data = [];
+        // Init data 24 hours x nDays
+        var hour_array = [];
         // Init
-        for (var i = 0; i<=numDays; i++) {
-            eat_data.push(0);
+        for (var i = 0; i < 24; i++) {
+            // Place an array at index i
+            hour_array.push([]);
+            for (var j = 0; j <= numDays; j++) {
+                // Place 1-hour increments
+                hour_array[i].push(1);
+            }
         }
+
         // Count number of meals per day
+        /*
         var date = min;
         _.each(entries, function(entry) {
             var current = moment(entry.get('datetime'));
             var idx = min.diff(current,'d') - 1;
             console.log("idx: " + idx + ", val: " + eat_data[idx]); 
             eat_data[idx] += 3;
-        });
+        });*/
 
         // Push fasting data
+        /*
         var fast_data = [];
         for (var i = 0; i<=numDays; i++) {
             fast_data.push(24 - eat_data[i]);
         }
+        */
 
-        b_data.datasets[this.eatingIdx].data = eat_data;
-        b_data.datasets[this.fastingIdx].data = fast_data;
+        // Init graph data
+        for (var i = 0; i < 24; i++) {
+            b_data.datasets.push(       
+                {
+                    fillColor : "rgba(220,220,220,0.5)",
+                    strokeColor : "rgba(220,220,220,0.8)",
+                    highlightFill: "rgba(220,220,220,0.75)",
+                    highlightStroke: "rgba(220,220,220,1)",
+                    data : []
+                }
+            );
+            var size = numDays.valueOf();
+            while(size--) b_data.datasets[i].data.push(1);
+        }
+
+        // Colour eating slots
+        /*_.each(entries. function(entry) {
+            var current = moment(entry.get('datetime'));
+            var i = current.hour();
+            var j = min.diff(current,'d') - 1;
+            b_data.datasets[i].
+        });*/
 
         this.barChartData = b_data;
     },
