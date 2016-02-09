@@ -21,14 +21,18 @@ directory.HomeView = Backbone.View.extend({
 
     logMeal: function() {
         console.log("Log meal button pressed");
-        var datetime = $("#datetimepicker", this.el).data("DateTimePicker").viewDate().toISOString();
+        var datetime = $("#datetimepicker", this.el).data("DateTimePicker").viewDate();
         var comment = $("#inputComment", this.el).val();
+        if (datetime > moment()) {
+            console.log("date can't be in the future");
+            return;
+        }
         if (comment === "" || datetime === "") {
             console.log("one or more fields are empty");
             return;
         }
         //Create a new log entry
-        var entry = directory.logEntriesCollection.create({"datetime": datetime, "comment": comment});
+        var entry = directory.logEntriesCollection.create({"datetime": datetime.toISOString(), "comment": comment});
         //Redraw graph
         this.graphView.updateGraph();
     }

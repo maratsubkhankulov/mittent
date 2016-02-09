@@ -1,5 +1,5 @@
 directory.GraphSegmentView = Backbone.View.extend({
-    tpl: '<div class="progress-bar progress-bar-<%= style %>" style="width: <%= percentage %>%" id="bar-div"> <span class="sr-only"><%= hour %></span> </div>',
+    tpl: '<div class="progress-bar progress-bar-<%= style %>" style="width: <%= percentage %>%" id="bar-div"> <span ><%= hour %></span> </div>',
 
     initialize: function() {
         this.template = _.template(this.tpl);
@@ -61,7 +61,7 @@ directory.GraphView = Backbone.View.extend({
     render: function () {
         this.$el.html(this.template());
 
-        for (var i = 0; i < this.barViews.length; i++) {
+        for (var i = this.barViews.length - 1; i >= 0 ; i--) {
             $("#bars-el", this.$el).append(this.barViews[i].render().el);
         }
 
@@ -82,9 +82,10 @@ directory.GraphView = Backbone.View.extend({
             console.log("No log entries to graph");
             return;
         }
+        var today = moment();
         var min = moment(entries[entries.length - 1].get('datetime'));
         var max = moment(entries[0].get('datetime'));
-        var numDays = max.diff(min, 'd') + 1;
+        var numDays = today.diff(min, 'd') + 1;
 
         // Label days in range
         var date = min;
@@ -110,15 +111,18 @@ directory.GraphView = Backbone.View.extend({
             console.log("No log entries to graph");
             return;
         }
+        var today = moment();
         var min = moment(entries[entries.length - 1].get('datetime'));
+        var minDay = moment(min).startOf('day');
         var max = moment(entries[0].get('datetime'));
-        var numDays = max.diff(min, 'd') + 1;
+        var numDays = today.diff(min, 'd') + 1;
 
         // Colour eating slots
         var myself = this;
         _.each(entries, function(entry) {
             var current = moment(entry.get('datetime'));
-            var barIdx = current.diff(min,'d');
+            var currentDay = moment(current).startOf('day');
+            var barIdx = currentDay.diff(minDay,'d');
             var segmentIdx = current.hour();
             myself.colourSlot(barIdx, segmentIdx, 'warning');
         });
