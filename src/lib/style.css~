@@ -18,12 +18,9 @@
 }
 
 .wood-bg {
-    background-image: url('../img/dark_wood_bg.png');
-    background-repeat: repeat-x;
-    color: #FFF;
+    background-image: url('../img/wood_panel_bg.png');
 }
 
 .newyear-bg {
     background-image: url('../img/new_year_bg.png');
-    background-repeat: repeat-x;
 }
