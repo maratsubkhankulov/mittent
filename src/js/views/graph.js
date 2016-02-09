@@ -41,7 +41,7 @@ directory.GraphBarView = Backbone.View.extend({
             var segmentView = new directory.GraphSegmentView({
                     model: {
                         title: "fasting",
-                        style: "success",
+                        style: "info",
                         percentage: "4.1666",
                         hour: i+1
                     }
