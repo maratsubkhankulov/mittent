@@ -145,7 +145,7 @@ directory.GraphView = Backbone.View.extend({
         if (segmentView.model.title === "fasting") {
             segmentView.model.title = title;
         } else {
-            segmentView.model.title += ";" + title;
+            segmentView.model.title += "; " + title;
         }
         segmentView.model.style = style;
         segmentView.render();

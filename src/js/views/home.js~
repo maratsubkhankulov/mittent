@@ -5,7 +5,7 @@ directory.HomeView = Backbone.View.extend({
     },
 
     initialize: function() {
-        this.statsView = new directory.StatsView({model: directory.logEntriesCollection });
+        this.statsView = new directory.StatsView({model: directory.logEntriesCollection});
         this.logView = new directory.LogView({model: directory.logEntriesCollection});
         this.graphView = new directory.GraphView({model: directory.logEntriesCollection});
     },
@@ -32,7 +32,7 @@ directory.HomeView = Backbone.View.extend({
             return;
         }
         //Create a new log entry
-        var entry = directory.logEntriesCollection.create({"datetime": datetime, "comment": comment});
+        var entry = directory.logEntriesCollection.create({"datetime": datetime.toISOString(), "comment": comment});
         //Redraw graph
         this.graphView.updateGraph();
     }

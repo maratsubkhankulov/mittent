@@ -5,7 +5,7 @@ directory.HomeView = Backbone.View.extend({
     },
 
     initialize: function() {
-        this.statsView = new directory.StatsView({model: directory.logEntriesCollection });
+        this.statsView = new directory.StatsView({model: directory.logEntriesCollection});
         this.logView = new directory.LogView({model: directory.logEntriesCollection});
         this.graphView = new directory.GraphView({model: directory.logEntriesCollection});
     },

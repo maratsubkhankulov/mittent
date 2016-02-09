@@ -9,8 +9,12 @@ directory.LogView = Backbone.View.extend({
         this.$el.html(this.template());
 
         //For use with in-memory model
+        var now = moment();
         _.each(this.model.models, function (entry) {
-            this.addOne(entry);
+            // Render results only for this day
+            if (moment(entry.get('datetime')).startOf('day').diff(now.startOf('d'),'day') == 0) {
+                this.addOne(entry);
+            }
         }, this);
 
         return this;
