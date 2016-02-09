@@ -22,7 +22,7 @@ directory.StatsView = Backbone.View.extend({
         if (entries.length > 0) {
             var now = moment();
             var max = moment(entries[0].get('datetime'));
-            this.statsModel.currentFast = (now.diff(max, 'minutes')/60-1).toFixed(1);
+            this.statsModel.currentFast = (now.diff(max, 'minutes')/60).toFixed(1);
         }
     },
 
