@@ -39,12 +39,17 @@
 <div class="panel panel-default box-shadow--4dp">
    <div class="panel-heading newyear-bg">Dashboard</div>
 	<div class="panel-body">
+      <h4>Fasting graph</h4>
       <div class="row" id="graph-el">
       </div>
       <div class="row">
-         <div class="col-md-6 col-md-offset-1" id="log-el">
+         <h4>Today's meal log</h4>
+         <div class="col-md-5 col-md-offset-2" id="log-el">
          </div>
-         <div class="col-md-4 newyear-bg" id="stats-el">
+     </div>
+    <h4>Aggregated stats</h4>
+      <div class="row">
+         <div class="col-md-4" id="stats-el">
          </div>
       </div>
 	</div>

@@ -130,6 +130,14 @@ directory.GraphView = Backbone.View.extend({
         var max = moment(entries[0].get('datetime'));
         var numDays = this.numDays;
 
+        // Update current hour
+        var hour = now.hours();
+        var currentDay = numDays - 1;
+        this.colourSlot(currentDay, hour, "current", "info");
+        for (hour++; hour < 24; hour++) {
+            this.colourSlot(currentDay, hour, "", "info hidden");
+        }
+
         // Colour eating slots
         var myself = this;
         _.each(entries, function(entry) {
@@ -140,13 +148,6 @@ directory.GraphView = Backbone.View.extend({
             myself.colourSlot(barIdx, segmentIdx, entry.get('comment'), "warning");
         });
 
-        // Update current hour
-        var hour = now.hours();
-        var currentDay = numDays - 1;
-        this.colourSlot(currentDay, hour, "current", "info");
-        for (hour++; hour < 24; hour++) {
-            this.colourSlot(currentDay, hour, "", "info hidden");
-        }
     },
 
     colourSlot: function(barIdx, segmentIdx, title, style) {

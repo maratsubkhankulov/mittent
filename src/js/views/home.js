@@ -45,5 +45,7 @@ directory.HomeView = Backbone.View.extend({
         var entry = directory.logEntriesCollection.create({"datetime": datetime.toISOString(), "comment": comment});
         //Redraw graph
         this.graphView.updateGraph();
+        this.statsView.recomputeStats();
+        this.statsView.render();
     }
 });

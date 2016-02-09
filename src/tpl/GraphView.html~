@@ -1,5 +1,5 @@
- <div class="col-md-10 col-md-offset-1">
-     <!--<h3>Fasting graph</h3> -->
+ <div class="col-md-9 col-md-offset-2">
+    <h4>Fasting graph</h4>
     <!--<button class="btn btn-primary" id="draw_graph_btn" >Graph it!</button>-->
     <div id="bars-el"></div>
 </div>
