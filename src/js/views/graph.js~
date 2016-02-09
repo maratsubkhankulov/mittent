@@ -1,5 +1,5 @@
 directory.GraphSegmentView = Backbone.View.extend({
-    tpl: '<div class="progress-bar progress-bar-<%= style %>" style="width: <%= percentage %>%" id="bar-div"> <span class="sr-only"></span> </div>',
+    tpl: '<div class="progress-bar progress-bar-<%= style %>" style="width: <%= percentage %>%" id="bar-div"> <span class="sr-only"><%= hour %></span> </div>',
 
     initialize: function() {
         this.template = _.template(this.tpl);
@@ -37,7 +37,8 @@ directory.GraphBarView = Backbone.View.extend({
             var segmentView = new directory.GraphSegmentView({
                     model: {
                         style: "success",
-                        percentage: "4.1666"
+                        percentage: "4.1666",
+                        hour: i+1
                     }
                 });
             this.segmentViews.push(segmentView);
