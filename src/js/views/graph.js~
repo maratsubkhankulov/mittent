@@ -22,7 +22,6 @@ directory.GraphBarView = Backbone.View.extend({
 
     render: function() {
         this.$el.html(this.template(this.model));
-        console.log("render BarView");
         
         for (var i = 0; i < this.segmentViews.length; i++) {
             $('#bar-el', this.$el).append(this.segmentViews[i].render().$el.html());
@@ -47,12 +46,15 @@ directory.GraphBarView = Backbone.View.extend({
 });
 
 directory.GraphView = Backbone.View.extend({
+    events: {
+        "click #draw_graph_btn":"updateGraph"
+    },
+
     initialize: function() {
         this.barViews = [];
         this.initBarChart();
 
-        this.listenTo(this.model, 'add',  this.updateGraph);
-        this.listenTo(this.model, 'remove', this.updateGraph);
+        this.listenTo(this.model, 'sync',  this.updateGraph);
     },
 
     render: function () {
@@ -100,7 +102,6 @@ directory.GraphView = Backbone.View.extend({
     },
 
     updateChartData: function() {
-        console.log("update chart");
 
         // Init vars
         var entries = this.model.models;

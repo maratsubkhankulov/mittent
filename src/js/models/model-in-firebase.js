@@ -13,7 +13,6 @@ directory.EntryCollection = Backbone.Firebase.Collection.extend({
     url: "https://mittent.firebaseio.com",
 
     comparator: function(m) {
-        console.log("comparator: " + -moment(m.get('datetime')));
         return -moment(m.get('datetime'));
     }
 });
