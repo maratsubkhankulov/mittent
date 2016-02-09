@@ -1,6 +1,6 @@
-<div class="panel panel-default box-shadow--4dp">
-   <div class="panel-heading">Log a meal</div>
-	<div class="panel-body" >
+<div class="panel panel-info box-shadow--4dp">
+   <div class="panel-heading wood-bg">Log a meal</div>
+   <div class="panel-body">
 	<form class="form-horizontal" role="form">
         <div class="form-group">
             <label for="date" class="control-label col-sm-2">Date &amp; time</label>
@@ -36,8 +36,8 @@
 	</form>
    </div>
 </div>
-<div class="panel panel-default box-shadow--4dp">
-   <div class="panel-heading">Summary</div>
+<div class="panel panel-info box-shadow--4dp">
+   <div class="panel-heading wood-bg">Dashboard</div>
 	<div class="panel-body">
       <div class="row" id="graph-el">
       </div>
