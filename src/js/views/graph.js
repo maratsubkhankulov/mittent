@@ -134,7 +134,7 @@ directory.GraphView = Backbone.View.extend({
 
         // Update current hour
         var hour = now.hours();
-        this.colourSlot(numDays, hour, "", "info");
+        this.colourSlot(numDays, hour, "current", "info");
         for (hour++; hour < 24; hour++) {
             this.colourSlot(numDays, hour, "", "info hidden");
         }
@@ -142,7 +142,11 @@ directory.GraphView = Backbone.View.extend({
 
     colourSlot: function(barIdx, segmentIdx, title, style) {
         var segmentView = this.barViews[barIdx].segmentViews[segmentIdx];
-        segmentView.model.title = title;
+        if (segmentView.model.title === "fasting") {
+            segmentView.model.title = title;
+        } else {
+            segmentView.model.title += "; " + title;
+        }
         segmentView.model.style = style;
         segmentView.render();
         this.barViews[barIdx].render();
