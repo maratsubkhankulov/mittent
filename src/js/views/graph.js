@@ -67,8 +67,8 @@ directory.GraphView = Backbone.View.extend({
     },
 
     updateGraph: function() {
-        //this.initialize();
-        //this.render();
+        this.initialize();
+        this.render();
     },
 
     initBarChart: function() {

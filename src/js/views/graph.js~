@@ -67,13 +67,12 @@ directory.GraphView = Backbone.View.extend({
     },
 
     updateGraph: function() {
-        //this.initialize();
-        //this.render();
+        this.initialize();
+        this.render();
     },
 
     initBarChart: function() {
         // Init vars
-        this.model.sort();
 
         var entries = this.model.models;
         if (entries.length == 0) {
