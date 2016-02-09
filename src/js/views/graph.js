@@ -87,16 +87,24 @@ directory.GraphView = Backbone.View.extend({
             console.log("No log entries to graph");
             return;
         }
-        var today = moment();
+        var now = moment();
         var min = moment(entries[entries.length - 1].get('datetime'));
         var max = moment(entries[0].get('datetime'));
-        var numDays = today.diff(min, 'd') + 1;
+        var numDays = moment(now).startOf('day').diff(moment(min).startOf('day'), 'd') + 1;
+        this.numDays = numDays;
+        this.min = min;
+        this.max = max;
+
+        if (min > now) {
+            console.log("Error min entry is after current datetime");
+            return;
+        }
 
         // Label days in range
         var date = min;
 
         this.barViews = [];
-        for (i = 0; i<=numDays; i++) {
+        for (i = 0; i < numDays; i++) {
             var view = new directory.GraphBarView({
                 model: {
                     datetime: date.format('ddd Do MMM')
@@ -120,7 +128,7 @@ directory.GraphView = Backbone.View.extend({
         var min = moment(entries[entries.length - 1].get('datetime'));
         var minDay = moment(min).startOf('day');
         var max = moment(entries[0].get('datetime'));
-        var numDays = now.diff(min, 'd') + 1;
+        var numDays = this.numDays;
 
         // Colour eating slots
         var myself = this;
@@ -134,9 +142,10 @@ directory.GraphView = Backbone.View.extend({
 
         // Update current hour
         var hour = now.hours();
-        this.colourSlot(numDays, hour, "current", "info");
+        var currentDay = numDays - 1;
+        this.colourSlot(currentDay, hour, "current", "info");
         for (hour++; hour < 24; hour++) {
-            this.colourSlot(numDays, hour, "", "info hidden");
+            this.colourSlot(currentDay, hour, "", "info hidden");
         }
     },
 
