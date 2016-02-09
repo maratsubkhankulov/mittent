@@ -1,5 +1,5 @@
 directory.GraphSegmentView = Backbone.View.extend({
-    tpl: '<div class="progress-bar progress-bar-<%= style %>" style="width: <%= percentage %>%" id="bar-div"> <span ><%= hour %></span> </div>',
+    tpl: '<div class="progress-bar progress-bar-<%= style %> top" title="<%= title %> " style="width: <%= percentage %>%" id="bar-div"> <span ><%= hour %></span> </div>',
 
     initialize: function() {
         this.template = _.template(this.tpl);
@@ -22,10 +22,14 @@ directory.GraphBarView = Backbone.View.extend({
 
     render: function() {
         this.$el.html(this.template(this.model));
-        
+
         for (var i = 0; i < this.segmentViews.length; i++) {
             $('#bar-el', this.$el).append(this.segmentViews[i].render().$el.html());
         }
+        // Add tooltips to segments
+        $(".top").tooltip({
+            placement: "top"
+        });
 
         return this;
     },
@@ -36,6 +40,7 @@ directory.GraphBarView = Backbone.View.extend({
         for (var i = 0; i < 24; i++) {
             var segmentView = new directory.GraphSegmentView({
                     model: {
+                        title: "fasting",
                         style: "success",
                         percentage: "4.1666",
                         hour: i+1
@@ -124,12 +129,13 @@ directory.GraphView = Backbone.View.extend({
             var currentDay = moment(current).startOf('day');
             var barIdx = currentDay.diff(minDay,'d');
             var segmentIdx = current.hour();
-            myself.colourSlot(barIdx, segmentIdx, 'warning');
+            myself.colourSlot(barIdx, segmentIdx, entry.get('comment'));
         });
     },
 
-    colourSlot: function(barIdx, segmentIdx, style) {
+    colourSlot: function(barIdx, segmentIdx, title) {
         var segmentView = this.barViews[barIdx].segmentViews[segmentIdx];
+        segmentView.model.title = title;
         segmentView.model.style = "warning";
         segmentView.render();
         this.barViews[barIdx].render();
