@@ -1,4 +1,6 @@
 directory.HomeView = Backbone.View.extend({
+    notes: ["Meal - and it was good!", "Plate of good food", "Chow - scrumptious"],
+
     events: {
         "click #logMealBtn":"logMeal",
         "click #randomizeData":"randomizeData",
@@ -11,7 +13,7 @@ directory.HomeView = Backbone.View.extend({
     },
 
     render:function () {
-        this.$el.html(this.template());
+        this.$el.html(this.template({note: this.notes[Math.floor(Math.random()*this.notes.length)]}));
 
         $('#stats-el', this.$el).append(this.statsView.render().el);
         $('#log-el', this.$el).append(this.logView.render().el);
