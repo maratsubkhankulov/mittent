@@ -42,6 +42,7 @@
       <label class="col-sm-2 control-labe" style="text-align:right">Graph</label>
       <div class="row" id="graph-el">
       </div>
+     <hr>
       <label class="col-sm-2 control-label" style="text-align:right">Log</label>
       <div class="row">
          <div class="col-md-8" id="log-el">
