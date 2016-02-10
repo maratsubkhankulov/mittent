@@ -24,3 +24,5 @@
 .newyear-bg {
     background-image: url('../img/new_year_bg.png');
 }
+
+.navbar > .container {width:auto;}
