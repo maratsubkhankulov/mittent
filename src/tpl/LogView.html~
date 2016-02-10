@@ -1,4 +1,3 @@
-<h3>Today's meal log</h3>
 <table class="table table-striped" id="log-list">
    <thead>
     <tr>
