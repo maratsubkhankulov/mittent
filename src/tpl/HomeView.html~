@@ -39,18 +39,18 @@
 <div class="panel panel-default box-shadow--4dp">
    <div class="panel-heading newyear-bg">Dashboard</div>
 	<div class="panel-body">
-      <label class="col-sm-2 control-label" style="">Graph</label>
       <div class="row" id="graph-el">
+      <label class="col-sm-2 control-label" style="text-align:right">Graph</label>
       </div>
      <hr>
-      <label class="col-sm-2 control-label" style="">Log</label>
       <div class="row">
+          <label class="col-sm-2 control-label" style="text-align:right">Log</label>
          <div class="col-md-9" id="log-el">
          </div>
      </div>
      <hr>
-    <label class="col-sm-2 control-label" style="">Aggregated stats</label>
       <div class="row">
+         <label class="col-sm-2 control-label" style="text-align:right">Aggregated stats</label>
          <div class="col-md-9" id="stats-el">
          </div>
       </div>
