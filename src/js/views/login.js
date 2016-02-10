@@ -1,7 +1,5 @@
 directory.LoginOrRegisterView = Backbone.View.extend({
 
-    shellTitle: "Login",
-
     events: {
         "click #goBtn":"goBtnClick",
     },
@@ -11,7 +9,6 @@ directory.LoginOrRegisterView = Backbone.View.extend({
 	},
 
     render: function () {
-        directory.shellView.setTitle(this.shellTitle);
         directory.shellView.hideBackArrow();
         directory.shellView.setBackButtonRoute("#");
         this.$el.html(this.template());
