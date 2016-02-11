@@ -27,6 +27,7 @@ directory.Router = Backbone.Router.extend({
     routes: {
         "":                     "home",
         "login":                "login",
+        "landing":              "landing",
     },
 
     initialize: function () {
@@ -38,9 +39,15 @@ directory.Router = Backbone.Router.extend({
         this.$content = $("#content");
     },
 
+    landing: function() {
+        directory.loginView = new directory.LandingView();
+        directory.loginView.render();
+        this.$content.html(directory.loginView.el);
+    },
+
     login: function() {
         directory.loginView = new directory.LoginOrRegisterView();
-        directory.login.render();
+        directory.loginView.render();
         this.$content.html(directory.loginView.el);
     },
 
@@ -58,7 +65,17 @@ directory.Router = Backbone.Router.extend({
 });
 
 $(document).on("ready", function () {
-    directory.loadTemplates(["HomeView", "ShellView", "StatsView", "LogView", "LogEntryView", "LoginOrRegisterView", "GraphView"],
+    directory.loadTemplates(
+        [
+        "HomeView",
+        "ShellView",
+        "StatsView",
+        "LandingView",
+        "LogView",
+        "LogEntryView",
+        "LoginOrRegisterView",
+        "GraphView"
+        ],
         function () {
 			console.log("ready!");
             directory.router = new directory.Router();
