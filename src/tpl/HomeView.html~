@@ -54,15 +54,27 @@
          </div>
       </div>
       <hr>
-      <div class="row">
-          <div class="col-sm-2 col-sm-offset-2" style="text-align:right">
-            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-            <input type="hidden" name="cmd" value="_s-xclick">
-            <input type="hidden" name="hosted_button_id" value="7Y8WA69MMHA42">
-            <input type="image" src="http://www.iconsclipart.com/images/64_64/lemon-icon-t253.png" border="0" name="submit" alt="PayPal – The safer, easier way to pay online.">
-            <img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
-            </form>
-        </div>
+  </div>
+</div>
+<div class="row">
+    <div class="col-sm-7 col-sm-offset-5">
+        <form class="form-horizontal donation-button " id="donation-button-1" style="display:none" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+            <div class="form-group">
+                <label class="control-label col-sm-3">Show your support. Buy me a lemon.</label>
+                <input type="hidden" name="cmd" value="_s-xclick">
+                <input type="hidden" name="hosted_button_id" value="7Y8WA69MMHA42">
+                <input class="box-shadow--4dp" type="image" src="img/lemon.png" border="0" name="submit" alt="PayPal – The safer, easier way to pay online.">
+                <img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
+            </div>
+        </form>
+        <form class="form-horizontal donation-button" id="donation-button-2" style="display:none" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+            <div class="form-group">
+                <label class="control-label col-sm-3">Show your support. Buy me a coffee.</label>
+                <input type="hidden" name="cmd" value="_s-xclick">
+                <input type="hidden" name="hosted_button_id" value="HRFTHBSM7W494">
+                <input class="box-shadow--4dp" type="image" src="img/coffee.png" border="0" name="submit" alt="PayPal – The safer, easier way to pay online.">
+                <img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
+        </form>
     </div>
 </div>
 <!--<div class="panel panel-default box-shadow--4dp">

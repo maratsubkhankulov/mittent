@@ -13,11 +13,19 @@ directory.HomeView = Backbone.View.extend({
     },
 
     render:function () {
+        // Populate note
         this.$el.html(this.template({note: this.notes[Math.floor(Math.random()*this.notes.length)]}));
+
+        // Populate donation button
+        var donationEls = $(".donation-button", this.$el);
+        var id = donationEls[Math.floor(Math.random()*donationEls.length)].id;
+        console.log($("#" + id, this.$el));
+        $("#" + id, this.$el).css("display","block");
 
         $('#stats-el', this.$el).append(this.statsView.render().el);
         $('#log-el', this.$el).append(this.logView.render().el);
         $('#graph-el', this.$el).append(this.graphView.render().el);
+
         return this;
     },
 
