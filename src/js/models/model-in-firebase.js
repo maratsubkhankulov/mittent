@@ -1,3 +1,5 @@
+directory.firebaseAppUrl = "https://mittent.firebaseio.com";
+
 directory.Entry = Backbone.Model.extend({
     defaults: {
         datetime: "2016/02/06 11:12 PM",
@@ -10,7 +12,7 @@ directory.Entry = Backbone.Model.extend({
 directory.EntryCollection = Backbone.Firebase.Collection.extend({
     model: directory.Entry,
 
-    url: "https://mittent.firebaseio.com",
+    url: directory.firebaseAppUrl,
 
     comparator: function(m) {
         return -moment(m.get('datetime'));
