@@ -23,8 +23,20 @@ var directory = {
 };
 
 directory.Controller = function() {
-    this.authWithPassword = function(username, password, callback) {
+
+    this._isLoggedIn = false;
+
+    this.setLoggedIn = function(isLoggedIn) {
+        this._isLoggedIn = isLoggedIn;
+    }
+
+    this.isLoggedIn = function() {
+        return this._isLoggedIn;
+    }
+
+    this.login = function(username, password, callback) {
         console.log("Controller: login");
+        var myself = this;
         directory.authWithPassword(
             username,
             password,
@@ -33,16 +45,16 @@ directory.Controller = function() {
                 console.log("Login Failed!", error);
                 callback("error");
               } else {
+                myself.setLoggedIn(true);
                 console.log("Authenticated successfully with payload:", authData);
                 directory.router.navigate("#home", { trigger: true });
                 //TODO update shell view to hide login button
-                directory.shellView.render();
               }
             }
         );
     }
 
-    this.createUser = function(username, password, callback) {
+    this.register = function(username, password, callback) {
         directory.createUser(
             username,
             password,
@@ -51,11 +63,15 @@ directory.Controller = function() {
                     console.log("Error creating user:", error);
                     callback("error");
                 } else {
+                    this.setLoggedIn(true);
                     console.log("Successfully created user account with uid:", userData.uid);
                     directory.router.navigate("#home", { trigger: true });
                 }
             }
         );
+    }
+
+    this.logout = function() {
     }
 };
 

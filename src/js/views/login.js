@@ -21,7 +21,7 @@ directory.LoginOrRegisterView = Backbone.View.extend({
         var username = $('#inputUsername', this.el).val();
         var password = $('#inputPassword', this.el).val();
 
-        directory.controller.authWithPassword(
+        directory.controller.login(
             username,
             password,
             function(error) {
@@ -36,7 +36,7 @@ directory.LoginOrRegisterView = Backbone.View.extend({
         var username = $('#inputUsername', this.el).val();
         var password = $('#inputPassword', this.el).val();
         
-        directory.controller.createUser(
+        directory.controller.register(
             username,
             password,
             function(error) {
