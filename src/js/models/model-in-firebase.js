@@ -18,3 +18,21 @@ directory.EntryCollection = Backbone.Firebase.Collection.extend({
         return -moment(m.get('datetime'));
     }
 });
+
+// Firebase specific utils
+directory.authWithPassword = function(username, password, callback) {
+    var ref = new Firebase(directory.firebaseAppUrl);
+    ref.authWithPassword({
+      email    : username,
+      password : password
+    }, callback);
+}
+
+directory.createUser = function(username, password, callback) {
+    var ref = new Firebase(directory.firebaseAppUrl);
+    ref.createUser({
+      email    : username,
+      password : password
+    },
+    callback);
+}

@@ -42,6 +42,23 @@ directory.Day = Backbone.Model.extend({
     }
 });
 
+// Firebase specific utils - mocked
+directory.authWithPassword = function(username, password, callback) {
+    if (username === "admin") {
+        return callback(null, { uid : "1234" });
+    } else {
+        return callback("Mock: incorrect username"); 
+    }
+}
+
+directory.createUser = function(username, password, callback) {
+    if (username === "admin") {
+        return callback(null, { uid : "1234" });
+    } else {
+        return callback("Mock: incorrect username"); 
+    }
+}
+
 directory.MemoryStore = function (successCallback, errorCallback) {
 
     this.load = function (log) {
