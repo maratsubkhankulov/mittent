@@ -22,6 +22,43 @@ var directory = {
     }
 };
 
+directory.Controller = function() {
+    this.authWithPassword = function(username, password, callback) {
+        console.log("Controller: login");
+        directory.authWithPassword(
+            username,
+            password,
+            function(error, authData) {
+              if (error) {
+                console.log("Login Failed!", error);
+                callback("error");
+              } else {
+                console.log("Authenticated successfully with payload:", authData);
+                directory.router.navigate("#home", { trigger: true });
+                //TODO update shell view to hide login button
+                directory.shellView.render();
+              }
+            }
+        );
+    }
+
+    this.createUser = function(username, password, callback) {
+        directory.createUser(
+            username,
+            password,
+            function(error, userData) {
+                if (error) {
+                    console.log("Error creating user:", error);
+                    callback("error");
+                } else {
+                    console.log("Successfully created user account with uid:", userData.uid);
+                    directory.router.navigate("#home", { trigger: true });
+                }
+            }
+        );
+    }
+};
+
 directory.Router = Backbone.Router.extend({
 
     routes: {
@@ -80,6 +117,7 @@ $(document).on("ready", function () {
         function () {
 			console.log("ready!");
             directory.router = new directory.Router();
+            directory.controller = new directory.Controller();
             directory.logEntriesCollection = new directory.EntryCollection();
             Backbone.history.start();
         });

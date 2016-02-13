@@ -21,32 +21,27 @@ directory.LoginOrRegisterView = Backbone.View.extend({
         var username = $('#inputUsername', this.el).val();
         var password = $('#inputPassword', this.el).val();
 
-        directory.authWithPassword(
-                username,
-                password,
-                function(error, authData) {
-                  if (error) {
-                    console.log("Login Failed!", error);
-                  } else {
-                    console.log("Authenticated successfully with payload:", authData);
-                  }
+        directory.controller.authWithPassword(
+            username,
+            password,
+            function(error) {
+                if (error) {
+                    console.log("LoginView: show error on login: " + error);
                 }
-            );
-
+            }
+        );
     },
 
     registerBtnClick: function() {
         var username = $('#inputUsername', this.el).val();
         var password = $('#inputPassword', this.el).val();
-
-        directory.createUser(
+        
+        directory.controller.createUser(
             username,
             password,
-            function(error, userData) {
+            function(error) {
                 if (error) {
-                    console.log("Error creating user:", error);
-                } else {
-                    console.log("Successfully created user account with uid:", userData.uid);
+                    console.log("LoginView: show error on register: " + error);
                 }
             }
         );
