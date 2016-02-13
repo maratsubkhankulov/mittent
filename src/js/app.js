@@ -25,9 +25,10 @@ var directory = {
 directory.Router = Backbone.Router.extend({
 
     routes: {
-        "":                     "home",
+        "":                     "landing",
         "login":                "login",
-        "landing":              "landing",
+        "demo":                 "home",
+        "home":                 "home",
     },
 
     initialize: function () {

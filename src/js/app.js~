@@ -25,9 +25,10 @@ var directory = {
 directory.Router = Backbone.Router.extend({
 
     routes: {
-        "":                     "home",
+        "":                     "landing",
         "login":                "login",
-        "landing":              "landing",
+        "demo":                 "home",
+        "home":                 "home",
     },
 
     initialize: function () {
@@ -40,9 +41,9 @@ directory.Router = Backbone.Router.extend({
     },
 
     landing: function() {
-        directory.loginView = new directory.LandingView();
-        directory.loginView.render();
-        this.$content.html(directory.loginView.el);
+        directory.landingView = new directory.LandingView();
+        directory.landingView.render();
+        this.$content.html(directory.landingView.el);
     },
 
     login: function() {
