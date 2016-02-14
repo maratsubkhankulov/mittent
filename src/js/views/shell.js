@@ -8,7 +8,7 @@ directory.ShellView = Backbone.View.extend({
     },
 
     render: function () {
-        this.$el.html(this.template());
+        this.$el.html(this.template( { username: directory.controller.getUsername() } ));
         this.update();
 
         return this;
@@ -22,6 +22,7 @@ directory.ShellView = Backbone.View.extend({
             $('#login-nav-btn', this.el).show();
             $('#logout-nav-btn', this.el).hide();
         }
+        $('#username-nav-txt', this.el).html(directory.controller.getUsername());
     },
 
     selectMenuItem: function(menuItem) {

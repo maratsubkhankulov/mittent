@@ -25,6 +25,15 @@ var directory = {
 directory.Controller = function() {
 
     this._isLoggedIn = false;
+    this._username = "Guest";
+
+    this.getUsername = function() {
+        return this._username;
+    }
+
+    this.setUsername = function(username) {
+        this._username = username;
+    }
 
     this.setLoggedIn = function(isLoggedIn) {
         this._isLoggedIn = isLoggedIn;
@@ -46,6 +55,7 @@ directory.Controller = function() {
                 callback("error");
               } else {
                 myself.setLoggedIn(true);
+                myself.setUsername(username);
                 console.log("Authenticated successfully with payload:", authData);
                 directory.router.navigate("#home", { trigger: true });
                 directory.shellView.update();
@@ -55,6 +65,7 @@ directory.Controller = function() {
     }
 
     this.register = function(username, password, callback) {
+        var myself = this;
         directory.createUser(
             username,
             password,
@@ -63,9 +74,7 @@ directory.Controller = function() {
                     console.log("Error creating user:", error);
                     callback("error");
                 } else {
-                    this.setLoggedIn(true);
-                    console.log("Successfully created user account with uid:", userData.uid);
-                    directory.router.navigate("#home", { trigger: true });
+                    myself.login(username, password, callback);
                 }
             }
         );
@@ -73,6 +82,7 @@ directory.Controller = function() {
 
     this.logout = function() {
         this.setLoggedIn(false);
+        this.setUsername("Guest");
         directory.shellView.update();
     }
 };
