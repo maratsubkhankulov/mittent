@@ -48,7 +48,7 @@ directory.Controller = function() {
                 myself.setLoggedIn(true);
                 console.log("Authenticated successfully with payload:", authData);
                 directory.router.navigate("#home", { trigger: true });
-                //TODO update shell view to hide login button
+                directory.shellView.update();
               }
             }
         );
@@ -72,6 +72,8 @@ directory.Controller = function() {
     }
 
     this.logout = function() {
+        this.setLoggedIn(false);
+        directory.shellView.update();
     }
 };
 
@@ -119,6 +121,7 @@ directory.Router = Backbone.Router.extend({
 });
 
 $(document).on("ready", function () {
+    directory.controller = new directory.Controller();
     directory.loadTemplates(
         [
         "HomeView",
@@ -133,7 +136,6 @@ $(document).on("ready", function () {
         function () {
 			console.log("ready!");
             directory.router = new directory.Router();
-            directory.controller = new directory.Controller();
             directory.logEntriesCollection = new directory.EntryCollection();
             Backbone.history.start();
         });

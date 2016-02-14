@@ -6,12 +6,9 @@ directory.LoginOrRegisterView = Backbone.View.extend({
     },
 
 	initialize: function() {
-        directory.shellView.hideLogoutBtn();
 	},
 
     render: function () {
-        directory.shellView.hideBackArrow();
-        directory.shellView.setBackButtonRoute("#");
         this.$el.html(this.template());
         
         return this;

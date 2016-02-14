@@ -1,20 +1,27 @@
 directory.ShellView = Backbone.View.extend({
 
+    events: {
+        'click #logout-nav-btn':'logoutBtnClick',
+    },
+
     initialize: function () {
-        /*if (Parse.User.current()) {
-            $('#logoutBtn').show();
-        } else {
-            $('#logoutBtn').hide();
-        }*/
     },
 
     render: function () {
         this.$el.html(this.template());
+        this.update();
+
         return this;
     },
 
-    events: {
-        'click #logoutBtn':'logoutBtnClick',
+    update: function() {
+        if (directory.controller.isLoggedIn()) {
+            $('#login-nav-btn', this.el).hide();
+            $('#logout-nav-btn', this.el).show();
+        } else {
+            $('#login-nav-btn', this.el).show();
+            $('#logout-nav-btn', this.el).hide();
+        }
     },
 
     selectMenuItem: function(menuItem) {
@@ -29,31 +36,9 @@ directory.ShellView = Backbone.View.extend({
         $('#title').text(title);
     },
 
-    hideBackArrow: function() {
-        console.log("hide back arrow");
-        $('#backArrow').hide();
-    },
-
-    showBackArrow: function() {
-        console.log("Show back arrow");
-        $('#backArrow').show();
-    },
-
-    setBackButtonRoute: function(route) {
-        console.log("Enable shell backbutton: " + route);
-        $('#brand').attr('href', route);
-    },
-
-    showLogoutBtn: function() {
-        $('#logoutBtn', this.el).show();
-    },
-
-    hideLogoutBtn: function() {
-        $('#logoutBtn', this.el).hide();
-    },
-
     logoutBtnClick: function() {
-        directory.logout();
+        console.log("Logout button click");
+        directory.controller.logout();
     }
 
 });
