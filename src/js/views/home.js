@@ -33,16 +33,14 @@ directory.HomeView = Backbone.View.extend({
         console.log("Log meal button pressed");
         var datetime = $("#datetimepicker", this.el).data("DateTimePicker").viewDate();
         var comment = $("#inputComment", this.el).val();
-        var diffFromNow = moment(datetime).startOf('d').diff(moment().startOf('d'), 'd');
-        if (diffFromNow == 0) {
-            // go ahead
-        } else if (diffFromNow > 0) {
+        var diffFromNow = moment(datetime).diff(moment(), 'h');
+        if (diffFromNow > 0) {
             console.log("date can't be in the future");
             return;
-        } else if (diffFromNow < 0) {
-            console.log("date can't be in the past");
+        } else if (diffFromNow < -24) {
+            console.log("date can't more than 24 hours from now");
             return;
-        }
+        } // else continue
 
         if (comment === "" || datetime === "") {
             console.log("one or more fields are empty");
