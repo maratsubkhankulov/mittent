@@ -24,6 +24,8 @@ directory.LoginOrRegisterView = Backbone.View.extend({
             function(error) {
                 if (error) {
                     console.log("LoginView: show error on login: " + error);
+                } else {
+                    console.log("LoginView: successful login: " + username);
                 }
             }
         );

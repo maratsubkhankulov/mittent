@@ -26,6 +26,7 @@ directory.Controller = function() {
 
     this._isLoggedIn = false;
     this._username = "Guest";
+    this._currentUid = "guest";
 
     this.getUsername = function() {
         return this._username;
@@ -56,8 +57,12 @@ directory.Controller = function() {
               } else {
                 myself.setLoggedIn(true);
                 myself.setUsername(username);
+                myself._currentUid = authData.uid;
                 console.log("Authenticated successfully with payload:", authData);
                 directory.router.navigate("#home", { trigger: true });
+                directory.logEntriesCollection.sync();
+                directory.homeView.initialize();
+                directory.homeView.render();
                 directory.shellView.update();
               }
             }
@@ -146,6 +151,7 @@ $(document).on("ready", function () {
         function () {
 			console.log("ready!");
             directory.router = new directory.Router();
+            directory.userCollection = new directory.UserCollection();
             directory.logEntriesCollection = new directory.EntryCollection();
             Backbone.history.start();
         });

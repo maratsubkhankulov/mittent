@@ -7,12 +7,14 @@ directory.HomeView = Backbone.View.extend({
     },
 
     initialize: function() {
+        console.log("Initializing HomeView");
+        console.log(directory.logEntriesCollection);
         this.statsView = new directory.StatsView({model: directory.logEntriesCollection});
         this.logView = new directory.LogView({model: directory.logEntriesCollection});
         this.graphView = new directory.GraphView({model: directory.logEntriesCollection});
     },
 
-    render:function () {
+    render:function() {
         // Populate note
         this.$el.html(this.template({note: this.notes[Math.floor(Math.random()*this.notes.length)]}));
 

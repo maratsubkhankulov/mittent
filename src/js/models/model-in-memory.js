@@ -1,6 +1,4 @@
 directory.Entry = Backbone.Model.extend({
-    initialize:function () {
-    },
 
     sync: function(method, model, options) {
         if (method === "create") {
@@ -14,10 +12,11 @@ directory.EntryCollection = Backbone.Collection.extend({
     model: directory.Entry,
 
     initialize: function() {
-        directory.store.load(this);
+        directory.store.loadEntryCollection(this);
     },
 
     sync: function(method, model, options) {
+        directory.store.loadEntryCollection(this);
         if (method === "read") {
             options.success(directory.store.logEntries);
         }
@@ -28,32 +27,47 @@ directory.EntryCollection = Backbone.Collection.extend({
     }
 });
 
-directory.Day = Backbone.Model.extend({
-    initialize:function () {
+directory.User = Backbone.Model.extend({
+
+    sync: function(method, model, options) {
+        if (method === "create") {
+            console.log("Create: user in memory: " + model.toJSON());
+            directory.store.users.push(model.toJSON());
+        }
+    }
+}); 
+
+directory.UserCollection = Backbone.Collection.extend({
+    model: directory.User,
+
+    initialize: function() {
+        directory.store.loadUsers(this);
     },
 
     sync: function(method, model, options) {
         if (method === "read") {
-            console.log("Get day: " + options.data.spanId + " " + options.data.date);
-            directory.store.findDayByDateAndSpanId(this.id, function (data) {
-                options.success(data);
-            });
+            options.success(directory.store.users);
         }
-    }
+    },
 });
 
 // Firebase specific utils - mocked
 directory.authWithPassword = function(username, password, callback) {
-    if (username === "admin") {
-        return callback(null, { uid : "1234" });
+    _.each(directory.userCollection.models, function(user) {
+        if (user.get('username') === username) {
+            _user = user;
+        }
+    }); // if nothing found
+    if (_user) {
+        callback("", { uid : _user.get('uid') });
     } else {
-        return callback("Mock: incorrect username"); 
+        callback("Mock: unknown username: " + username); 
     }
 }
 
 directory.createUser = function(username, password, callback) {
     if (username === "admin") {
-        return callback(null, { uid : "1234" });
+        return callback(null, { uid : "user234" });
     } else {
         return callback("Mock: incorrect username"); 
     }
@@ -61,9 +75,18 @@ directory.createUser = function(username, password, callback) {
 
 directory.MemoryStore = function (successCallback, errorCallback) {
 
-    this.load = function (log) {
+    this.loadEntryCollection = function(log) {
+        log.models = [];
         _.each(this.logEntries, function(entry) {
-            log.create(entry);
+            if (entry["uid"] === directory.controller._currentUid) {
+                log.create(entry);
+            }
+        });
+    }
+
+    this.loadUsers = function(users) {
+        _.each(this.users, function(user) {
+            users.create(user);
         });
     }
 
@@ -79,49 +102,6 @@ directory.MemoryStore = function (successCallback, errorCallback) {
         }
         callLater(callback, day);
     }
-
-    this.findSpanById = function (id, callback) {
-        var spans = this.spans;
-        var span = null;
-        var l = spans.length;
-        for (var i = 0; i < l; i++) {
-            if (spans[i].id === id) {
-                span = spans[i];
-                break;
-            }
-        }
-        callLater(callback, span);
-    }
-
-    this.findDaysBySpanId = function (spanId, callback) {
-        var days = this.days;
-        var dayCollection = this.days.filter(function (element) {
-            return spanId === element.spanId;
-        });
-        callLater(callback, dayCollection);
-    }
-
-    this.findDayByDateAndSpanId = function (dateAndSpanId, callback) {
-        //console.log("Find day by date, spanId: " + dateAndSpanId[0]);
-        var days = this.days;
-        var day = null;
-        var l = days.length;
-        for (var i = 0; i < l; i++) {
-            console.log("Comparing spanId: " + days[i].spanId + "=" + dateAndSpanId[0]);
-            if (days[i].spanId === dateAndSpanId[0]) {
-                //console.log("Comparing date strings: " + days[i].date + "=" + dateAndSpanId[1]);
-                var date1 = directory.newDate(directory.formatDateStr(days[i].date));
-                var date2 = directory.newDate(dateAndSpanId[1]);
-                //console.log("Comparing date: " + date1 + "=" + date2);
-                if (date1.getTime() == date2.getTime()) {
-                    day = days[i];
-                    break;
-                }
-            }
-        }
-        callLater(callback, day);
-    }
-
     // Used to simulate async calls. This is done to provide a consistent interface with stores that use async data access APIs
     var callLater = function (callback, data) {
         if (callback) {
@@ -132,10 +112,19 @@ directory.MemoryStore = function (successCallback, errorCallback) {
     }
 
     this.logEntries = [
-        {"id": "4", "datetime": "2016-02-07T20:50:09.056Z", "comment": "Papa John's Pizza"},
-        {"id": "2", "datetime": "2016-02-08T17:00:09.056Z", "comment": "Steamed tofu"},
-        {"id": "7", "datetime": "2016-02-07T14:36:09.056Z", "comment": "Mixed grain salad"},
-        {"id": "5", "datetime": "2016-02-08T10:00:09.056Z", "comment": "Coffee"}
+        {"uid": "user123", "id": "11", "datetime": "2016-02-14T20:50:09.056Z", "comment": "Fried tofu"},
+        {"uid": "user123", "id": "12", "datetime": "2016-02-13T17:00:09.056Z", "comment": "Eggs benedict"},
+        {"uid": "user123", "id": "13", "datetime": "2016-02-14T14:36:09.056Z", "comment": "Poo on a stick"},
+        {"uid": "user123", "id": "14", "datetime": "2016-02-13T10:00:09.056Z", "comment": "Kitkat"},
+        {"uid": "guest", "id": "4", "datetime": "2016-02-14T20:50:09.056Z", "comment": "Papa John's Pizza"},
+        {"uid": "guest", "id": "2", "datetime": "2016-02-15T17:00:09.056Z", "comment": "Steamed tofu"},
+        {"uid": "guest", "id": "7", "datetime": "2016-02-14T14:36:09.056Z", "comment": "Mixed grain salad"},
+        {"uid": "guest", "id": "5", "datetime": "2016-02-15T10:00:09.056Z", "comment": "Coffee"},
+    ];
+
+    this.users = [
+        {"uid": "guest", "username": "Guest"},
+        {"uid": "user123", "username": "admin"}
     ];
 
     callLater(successCallback);
