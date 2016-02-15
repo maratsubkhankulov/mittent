@@ -97,7 +97,7 @@ directory.Router = Backbone.Router.extend({
     routes: {
         "":                     "landing",
         "login":                "login",
-        "demo":                 "home",
+        "demo":                 "demo",
         "home":                 "home",
     },
 
@@ -122,10 +122,22 @@ directory.Router = Backbone.Router.extend({
         this.$content.html(directory.loginView.el);
     },
 
+    demo: function() {
+        // Since the home view never changes, we instantiate it and render it only once
+        if (!directory.demoView) {
+            directory.demoView = new directory.HomeView({model: { demo: true }});
+            directory.demoView.render();
+        } else {
+            console.log('reusing home view');
+            directory.demoView.delegateEvents(); // delegate events when the view is recycled
+        }
+        this.$content.html(directory.demoView.el);
+    },
+
     home: function () {
         // Since the home view never changes, we instantiate it and render it only once
         if (!directory.homeView) {
-            directory.homeView = new directory.HomeView();
+            directory.homeView = new directory.HomeView({model: { demo: false }});
             directory.homeView.render();
         } else {
             console.log('reusing home view');

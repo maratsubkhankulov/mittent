@@ -37,7 +37,7 @@
    </div>
 </div>
 <div class="panel panel-default box-shadow--4dp">
-   <div class="panel-heading newyear-bg">Dashboard</div>
+    <div class="panel-heading newyear-bg">Dashboard <font style="color: red"><% if (demo) { print(" - demo mode, changes will not be saved"); }</font></div>
 	<div class="panel-body paper-bg">
       <div class="row" id="graph-el">
       </div>
@@ -53,7 +53,6 @@
          <div class="col-md-9" id="stats-el">
          </div>
       </div>
-      <hr>
   </div>
 </div>
 <div class="row">

@@ -16,7 +16,11 @@ directory.HomeView = Backbone.View.extend({
 
     render:function() {
         // Populate note
-        this.$el.html(this.template({note: this.notes[Math.floor(Math.random()*this.notes.length)]}));
+        
+        this.$el.html(this.template({
+            note: this.notes[Math.floor(Math.random()*this.notes.length)],
+            demo: this.model.demo }
+            ));
 
         // Populate donation button
         var donationEls = $(".donation-button", this.$el);
