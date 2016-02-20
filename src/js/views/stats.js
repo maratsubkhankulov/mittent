@@ -31,7 +31,7 @@ directory.StatsView = Backbone.View.extend({
     //Allow overlapping 2 hour periods
     //Compute meals per 24 hours cycle
 
-    computeAverageFast(log) {
+    computeAverageFast: function(log) {
        /*log.sort();
        min = log[0].get('datetime');
        max = log[log.length-1].get('datetime');
