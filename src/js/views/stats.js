@@ -25,6 +25,45 @@ directory.StatsView = Backbone.View.extend({
             this.statsModel.currentFast = (now.diff(max, 'minutes')/60).toFixed(1);
         }
     },
+    
+    //Count from first mealtime
+    //Assume 2 hours digestion
+    //Allow overlapping 2 hour periods
+    //Compute meals per 24 hours cycle
+
+    computeAverageFast(log) {
+       /*log.sort();
+       min = log[0].get('datetime');
+       max = log[log.length-1].get('datetime');
+
+       var numDays = now.startOf(day).diff(min.startOf(day), days);
+       var fastingHoursPerDay = [] //size of numDays
+
+       var fastingIndex = 0;
+       var logIndex = 1;
+       var current = log[logIndex];
+       for (var i = 0; i < numDays; i++) {
+          // Compute eating blocks
+          // Move forward in log until end of days is reached
+          var eatingHours = 0;
+          for (meal in this day) { 
+             
+          }
+          fastingHoursPerDay[fastingIndex] = 24 - eatingHours;
+          current = log[logIndex];
+          logIndex += 1;
+       }
+
+       // Compute average fast in a 24 hour cycle
+       var sum = 0;
+       for (var i = 0; i < numDays; i++) {
+           sum += fastingHoursPerDay[i];
+       }
+
+       // Return average
+       return sum/numDays;*/
+    },
+    
 
     recomputeStats: function() {
         this.computeStats();
