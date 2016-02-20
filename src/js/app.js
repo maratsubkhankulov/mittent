@@ -60,7 +60,7 @@ directory.Controller = function() {
                 myself._currentUid = authData.uid;
                 console.log("Authenticated successfully with payload:", authData);
                 directory.router.navigate("#home", { trigger: true });
-                directory.logEntriesCollection.sync();
+                directory.logCollection.sync();
                 directory.homeView.initialize();
                 directory.homeView.render();
                 directory.shellView.update();
@@ -163,8 +163,9 @@ $(document).on("ready", function () {
         function () {
 			console.log("ready!");
             directory.router = new directory.Router();
-            directory.userCollection = new directory.UserCollection();
-            directory.logEntriesCollection = new directory.EntryCollection();
+            directory.logCollection = new directory.LogCollection();
+            console.log("Log collection");
+            console.log(directory.logCollection);
             Backbone.history.start();
         });
 });

@@ -19,6 +19,15 @@ directory.EntryCollection = Backbone.Firebase.Collection.extend({
     }
 });
 
+directory.Log = Backbone.Model.extend({
+
+}); 
+
+directory.LogCollection = Backbone.Firebase.Collection.extend({
+    model: directory.Log,
+    url: directory.firebaseAppUrl + "/logs/guest"
+});
+
 // Firebase specific utils
 directory.authWithPassword = function(username, password, callback) {
     var ref = new Firebase(directory.firebaseAppUrl);
