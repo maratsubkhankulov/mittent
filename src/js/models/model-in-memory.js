@@ -1,33 +1,4 @@
-directory.Entry = Backbone.Model.extend({
-
-    sync: function(method, model, options) {
-        if (method === "create") {
-            console.log("Create: log entry in memory: " + model.toJSON());
-            directory.store.logEntries.push(model.toJSON());
-        }
-    }
-});
-
-directory.EntryCollection = Backbone.Collection.extend({
-    model: directory.Entry,
-
-    initialize: function() {
-        directory.store.loadEntryCollection(this);
-    },
-
-    sync: function(method, model, options) {
-        directory.store.loadEntryCollection(this);
-        if (method === "read") {
-            options.success(directory.store.logEntries);
-        }
-    },
-
-    comparator: function(m) {
-        return -moment(m.get('datetime'));
-    }
-});
-
-directory.User = Backbone.Model.extend({
+directory.Log = Backbone.Model.extend({
 
     sync: function(method, model, options) {
         if (method === "create") {
@@ -37,8 +8,8 @@ directory.User = Backbone.Model.extend({
     }
 }); 
 
-directory.UserCollection = Backbone.Collection.extend({
-    model: directory.User,
+directory.LogCollection = Backbone.Collection.extend({
+    model: directory.Log,
 
     initialize: function() {
         directory.store.loadUsers(this);
