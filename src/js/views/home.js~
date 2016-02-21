@@ -6,12 +6,12 @@ directory.HomeView = Backbone.View.extend({
         "click #randomizeData":"randomizeData",
     },
 
-    initialize: function() {
+    initialize: function(model) {
         console.log("Initializing HomeView");
-        console.log(directory.logEntriesCollection);
-        this.statsView = new directory.StatsView({model: directory.logEntriesCollection});
-        this.logView = new directory.LogView({model: directory.logEntriesCollection});
-        this.graphView = new directory.GraphView({model: directory.logEntriesCollection});
+
+        this.statsView = new directory.StatsView({model: this.model.log});
+        this.logView = new directory.LogView({model: this.model.log});
+        this.graphView = new directory.GraphView({model: this.model.log});
     },
 
     render:function() {
@@ -19,7 +19,7 @@ directory.HomeView = Backbone.View.extend({
         
         this.$el.html(this.template({
             note: this.notes[Math.floor(Math.random()*this.notes.length)],
-            demo: this.model.demo
+            demo: this.model.demo }
             ));
 
         // Populate donation button
@@ -54,7 +54,7 @@ directory.HomeView = Backbone.View.extend({
         }
         console.log(datetime.toISOString());
         //Create a new log entry
-        var entry = directory.logEntriesCollection.create({"datetime": datetime.toISOString(), "comment": comment});
+        var entry = this.model.log.create({"datetime": datetime.toISOString(), "comment": comment});
         //Redraw graph
         this.graphView.updateGraph();
         this.statsView.recomputeStats();

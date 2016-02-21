@@ -6,12 +6,12 @@ directory.HomeView = Backbone.View.extend({
         "click #randomizeData":"randomizeData",
     },
 
-    initialize: function() {
+    initialize: function(model) {
         console.log("Initializing HomeView");
-        console.log(directory.logCollection);
-        this.statsView = new directory.StatsView({model: directory.logCollection});
-        this.logView = new directory.LogView({model: directory.logCollection});
-        this.graphView = new directory.GraphView({model: directory.logCollection});
+
+        this.statsView = new directory.StatsView({model: this.model.log});
+        this.logView = new directory.LogView({model: this.model.log});
+        this.graphView = new directory.GraphView({model: this.model.log});
     },
 
     render:function() {
@@ -54,7 +54,7 @@ directory.HomeView = Backbone.View.extend({
         }
         console.log(datetime.toISOString());
         //Create a new log entry
-        var entry = directory.logCollection.create({"datetime": datetime.toISOString(), "comment": comment});
+        var entry = this.model.log.create({"datetime": datetime.toISOString(), "comment": comment});
         //Redraw graph
         this.graphView.updateGraph();
         this.statsView.recomputeStats();

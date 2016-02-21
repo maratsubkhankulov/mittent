@@ -28,6 +28,10 @@ directory.Controller = function() {
     this._username = "Guest";
     this._currentUid = "guest";
 
+    this.getCurrentUserId = function() {
+        return this._currentUid;
+    }
+
     this.getUsername = function() {
         return this._username;
     }
@@ -60,9 +64,6 @@ directory.Controller = function() {
                 myself._currentUid = authData.uid;
                 console.log("Authenticated successfully with payload:", authData);
                 directory.router.navigate("#home", { trigger: true });
-                directory.logCollection.sync();
-                directory.homeView.initialize();
-                directory.homeView.render();
                 directory.shellView.update();
               }
             }
@@ -125,7 +126,7 @@ directory.Router = Backbone.Router.extend({
     demo: function() {
         // Since the home view never changes, we instantiate it and render it only once
         if (!directory.demoView) {
-            directory.demoView = new directory.HomeView({model: { demo: true }});
+            directory.demoView = new directory.HomeView({model: { demo: true, log: demoLogCollection }});
             directory.demoView.render();
         } else {
             console.log('reusing home view');
@@ -135,14 +136,17 @@ directory.Router = Backbone.Router.extend({
     },
 
     home: function () {
-        // Since the home view never changes, we instantiate it and render it only once
-        if (!directory.homeView) {
-            directory.homeView = new directory.HomeView({model: { demo: false }});
-            directory.homeView.render();
-        } else {
-            console.log('reusing home view');
-            directory.homeView.delegateEvents(); // delegate events when the view is recycled
+        if (!directory.controller.isLoggedIn()) {
+            directory.router.navigate("#demo", { trigger: true });
         }
+
+        var newLogPath = directory.firebaseAppUrl + "/logs/" + directory.controller.getCurrentUserId();
+        logCollection = new directory.LogCollection([], {url: newLogPath});
+        console.log(newLogPath);
+
+        directory.homeView = new directory.HomeView({model: { demo: false, log: logCollection }});
+        directory.homeView.render();
+            
         this.$content.html(directory.homeView.el);
     }
 });
@@ -163,10 +167,8 @@ $(document).on("ready", function () {
         function () {
 			console.log("ready!");
             directory.router = new directory.Router();
-            directory.logCollection = new directory.LogCollection();
-            console.log("Log collection");
-            console.log(directory.logCollection);
-            directory.logCollection = new directory.EntryCollection();
+            
+            demoLogCollection = new directory.LogCollection([], {url: directory.firebaseAppUrl + "/logs/guest"});
             Backbone.history.start();
         });
 });
