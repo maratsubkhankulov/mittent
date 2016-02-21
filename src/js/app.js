@@ -126,6 +126,7 @@ directory.Router = Backbone.Router.extend({
     demo: function() {
         // Since the home view never changes, we instantiate it and render it only once
         if (!directory.demoView) {
+            demoLogCollection = new directory.LogCollection([], {url: directory.firebaseAppUrl + "/logs/guest"});
             directory.demoView = new directory.HomeView({model: { demo: true, log: demoLogCollection }});
             directory.demoView.render();
         } else {
@@ -168,8 +169,6 @@ $(document).on("ready", function () {
         function () {
 			console.log("ready!");
             directory.router = new directory.Router();
-            
-            demoLogCollection = new directory.LogCollection([], {url: directory.firebaseAppUrl + "/logs/guest"});
             Backbone.history.start();
         });
 });
