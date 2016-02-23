@@ -70,7 +70,7 @@ directory.Controller = function() {
             function(error, authData) {
               if (error) {
                 console.log("Login Failed!", error);
-                callback("error");
+                callback(error);
                 ga('send', 'event', 'Login', 'click', 'Failed');
               } else {
                 myself.setLoggedIn(true);
@@ -93,7 +93,7 @@ directory.Controller = function() {
             function(error, userData) {
                 if (error) {
                     console.log("Error creating user:", error);
-                    callback("error");
+                    callback(error);
                     ga('send', 'event', 'Registration', 'click', 'Failed');
                 } else {
                     myself.login(username, password, callback);
