@@ -9,6 +9,9 @@ directory.LogCollection = Backbone.Firebase.Collection.extend({
 
     initialize: function(init, props) {
         this.url = props.url;
+    },
+    comparator: function(log) {
+        return -moment(log.get('datetime'));
     }
 });
 
