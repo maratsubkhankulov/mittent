@@ -5,12 +5,21 @@ directory.Log = Backbone.Model.extend({
 
 directory.LogCollection = Backbone.Firebase.Collection.extend({
     model: directory.Log,
-    url: directory.firebaseAppUrl + "logs/guest",
+    url: directory.firebaseAppUrl + "/logs/guest",
 
     initialize: function(init, props) {
         this.url = props.url;
     }
 });
+
+directory.Signup = Backbone.Model.extend({
+}); 
+
+directory.SignupCollection = Backbone.Firebase.Collection.extend({
+    model: directory.Signup,
+    url: directory.firebaseAppUrl + "/signups",
+});
+
 
 // Firebase specific utils
 directory.authWithPassword = function(username, password, callback) {

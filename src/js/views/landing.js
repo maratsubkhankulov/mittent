@@ -1,6 +1,7 @@
 directory.LandingView = Backbone.View.extend({
     events: {
-        "click #demoBtn":"demoBtnClick"
+        "click #demoBtn":"demoBtnClick",
+        "click #get-started-btn":"getStartedBtnClick"
     },
 
     initialize: function() {
@@ -14,5 +15,9 @@ directory.LandingView = Backbone.View.extend({
     demoBtnClick: function() {
         console.log("demo button");
         directory.router.navigate("#demo", { trigger: true });
+    },
+
+    getStartedBtnClick: function() {
+        directory.controller.getStarted($("#email-input", this.el).val());
     }
 });

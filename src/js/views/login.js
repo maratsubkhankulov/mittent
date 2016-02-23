@@ -9,7 +9,7 @@ directory.LoginOrRegisterView = Backbone.View.extend({
 	},
 
     render: function () {
-        this.$el.html(this.template());
+        this.$el.html(this.template({ email: directory.controller.getEmail() }));
         
         return this;
     },

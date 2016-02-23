@@ -24,9 +24,11 @@ var directory = {
 
 directory.Controller = function() {
 
+    this._signups = new directory.SignupCollection();
     this._isLoggedIn = false;
     this._username = "Guest";
     this._currentUid = "guest";
+    this._email = "";
 
     this.getCurrentUserId = function() {
         return this._currentUid;
@@ -34,6 +36,17 @@ directory.Controller = function() {
 
     this.getUsername = function() {
         return this._username;
+    }
+
+    this.getEmail = function() {
+        return this._email;
+    }
+
+    this.getStarted = function(email) {
+        this._email = email;
+        this._signups.create({"email": email});
+        ga('send', 'event', 'SignupBtn', 'click', 'Landing page');
+        directory.router.navigate("#login", { trigger: true });
     }
 
     this.setUsername = function(username) {
@@ -115,12 +128,14 @@ directory.Router = Backbone.Router.extend({
         directory.landingView = new directory.LandingView();
         directory.landingView.render();
         this.$content.html(directory.landingView.el);
+        ga('send', 'pageview', '/landing');
     },
 
     login: function() {
         directory.loginView = new directory.LoginOrRegisterView();
         directory.loginView.render();
         this.$content.html(directory.loginView.el);
+        ga('send', 'pageview', '/login');
     },
 
     demo: function() {
@@ -134,6 +149,7 @@ directory.Router = Backbone.Router.extend({
             directory.demoView.delegateEvents(); // delegate events when the view is recycled
         }
         this.$content.html(directory.demoView.el);
+        ga('send', 'pageview', '/demo');
     },
 
     home: function () {
@@ -150,6 +166,7 @@ directory.Router = Backbone.Router.extend({
         directory.homeView.render();
             
         this.$content.html(directory.homeView.el);
+        ga('send', 'pageview', '/home');
     }
 });
 

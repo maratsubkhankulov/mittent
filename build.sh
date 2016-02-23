@@ -12,6 +12,3 @@ echo "adding all to repo and committing"
 cd maratsubkhankulov.github.io
 git add *
 git commit -am "io update"
-
-echo "pushing to remote"
-git push origin master
