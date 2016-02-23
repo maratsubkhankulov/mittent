@@ -71,6 +71,7 @@ directory.Controller = function() {
               if (error) {
                 console.log("Login Failed!", error);
                 callback("error");
+                ga('send', 'event', 'Login', 'click', 'Failed');
               } else {
                 myself.setLoggedIn(true);
                 myself.setUsername(username);
@@ -78,6 +79,7 @@ directory.Controller = function() {
                 console.log("Authenticated successfully with payload:", authData);
                 directory.router.navigate("#home", { trigger: true });
                 directory.shellView.update();
+                ga('send', 'event', 'Login', 'click', 'Successful');
               }
             }
         );
@@ -92,8 +94,10 @@ directory.Controller = function() {
                 if (error) {
                     console.log("Error creating user:", error);
                     callback("error");
+                    ga('send', 'event', 'Registration', 'click', 'Failed');
                 } else {
                     myself.login(username, password, callback);
+                    ga('send', 'event', 'Registration', 'click', 'Successful');
                 }
             }
         );

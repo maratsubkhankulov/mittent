@@ -42,9 +42,11 @@ directory.HomeView = Backbone.View.extend({
         var diffFromNow = moment(datetime).diff(moment(), 'h');
         if (diffFromNow > 0) {
             console.log("date can't be in the future");
+            ga('send', 'event', 'LogMealBtn', 'click', 'Fail');
             return;
         } else if (diffFromNow < -24) {
             console.log("date can't more than 24 hours from now");
+            ga('send', 'event', 'LogMealBtn', 'click', 'Fail');
             return;
         } // else continue
 
@@ -55,6 +57,7 @@ directory.HomeView = Backbone.View.extend({
         console.log(datetime.toISOString());
         //Create a new log entry
         var entry = this.model.log.create({"datetime": datetime.toISOString(), "comment": comment});
+        ga('send', 'event', 'LogMealBtn', 'click', 'Success');
         //Redraw graph
         this.graphView.updateGraph();
         this.statsView.recomputeStats();
