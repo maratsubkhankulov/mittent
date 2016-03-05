@@ -1,0 +1,39 @@
+<nav class="navbar navbar-default navbar-fixed-top newyear-bg box-shadow--4dp" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a id='brand' class="navbar-brand" href="#"><span id="backArrow" class="navbar-logo" style="display: none">&lt; </span><span class="navbar-logo">Mittent<sup>(beta)</sup></span><span id='title'></span></a>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        <li id="login-nav-btn">
+            <a href="#login">
+                Login or Register</a>
+        </li>
+        <li id="logout-nav-btn">
+            <a href="#">Logout</a>
+        </li>
+        <li id="">
+            <a href="#home">
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                <font id="username-nav-txt"><%= username %></font>
+            </a>
+        </li>
+      </ul>
+    </div>
+  </div><!-- /.container-fluid -->
+</nav>
+
+<div class="container" id="content">
+
+    <div class="row-fluid">
+        <div class="span12" id="content"></div>
+    </div>
+
+</div>

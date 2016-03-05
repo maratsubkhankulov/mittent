@@ -1,0 +1,81 @@
+<div class="panel panel-default box-shadow--4dp">
+   <div class="panel-heading newyear-bg">Log a meal
+   </div>
+   <div class="panel-body paper-bg">
+	<form class="form-horizontal" role="form">
+        <div class="form-group">
+            <label for="date" class="control-label col-sm-2">Date &amp; time</label>
+            <div class="col-md-8">
+                <div class="input-group">
+                    <div class="input-group input-append date" id="datetimepicker">
+                        <input class="form-control" data-date-format="YYYY-MM-DD h:mm A"
+                            name="date" type="text"
+                            value="<% print(moment().format('YYYY-MM-DD h:mm A')) %>"
+                            id="inputDatetime">
+                      <span class="input-group-addon add-on">
+                          <span class="glyphicon glyphicon-calendar"></span>
+                      </span>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                        $('#datetimepicker').datetimepicker();
+                </script>
+            </div>
+        </div>
+		<div class="form-group">
+			<label for="inputPassword3" class="col-sm-2 control-label">Note</label>
+			<div class="col-sm-4">
+                <input type="text" class="form-control" id="inputComment" value="<%= note %>"/>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="" class="col-sm-2 control-label">
+            </label>
+			<div class="col-sm-9">
+				<a id="logMealBtn" class="btn btn-default newyear-bg">Log meal</a>
+			</div>
+		</div>
+	</form>
+   </div>
+</div>
+<div class="panel panel-default box-shadow--4dp">
+    <div class="panel-heading newyear-bg">Dashboard <font style="color: red"><% if (demo) { print(" - demo mode, changes will not be saved"); } %></font></div>
+	<div class="panel-body paper-bg">
+      <div class="row" id="graph-el">
+      </div>
+     <hr>
+      <div class="row">
+          <label class="col-sm-2 control-label" style="text-align:right">Log</label>
+         <div class="col-md-9" id="log-el">
+         </div>
+     </div>
+     <hr>
+      <div class="row">
+         <label class="col-sm-2 control-label" style="text-align:right">Aggregated stats</label>
+         <div class="col-md-9" id="stats-el">
+         </div>
+      </div>
+  </div>
+</div>
+<div class="row">
+    <div class="col-sm-7 col-sm-offset-5">
+        <form class="form-horizontal donation-button " id="donation-button-1" style="display:none" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+            <div class="form-group">
+                <label class="control-label col-sm-3">Show your support. Buy <a href="mailto:mittentapp@hotmail.com">me</a> a lemon.</label>
+                <input type="hidden" name="cmd" value="_s-xclick">
+                <input type="hidden" name="hosted_button_id" value="7Y8WA69MMHA42">
+                <input type="image" src="img/lemon.png" border="0" name="submit" alt="PayPal – The safer, easier way to pay online.">
+                <img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
+            </div>
+        </form>
+        <form class="form-horizontal donation-button" id="donation-button-2" style="display:none" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+            <div class="form-group">
+                <label class="control-label col-sm-3">Show your support. Buy me a coffee.</label>
+                <input type="hidden" name="cmd" value="_s-xclick">
+                <input type="hidden" name="hosted_button_id" value="HRFTHBSM7W494">
+                <input type="image" src="img/coffee.png" border="0" name="submit" alt="PayPal – The safer, easier way to pay online.">
+                <img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
+        </form>
+    </div>
+</div>
+
