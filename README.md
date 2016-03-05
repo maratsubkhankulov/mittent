@@ -1,11 +1,11 @@
-# Intermittent Faster!
-(not live yet)
+# Mittent
 
-This is a webapp that tracks your meals and presents your eating habits graphically.
-Use it to try out intermittent fasting. It's all the rage right now.
+A meal tracker.
+Use it to try out intermittent fasting.
+It's all the rage right now.
 
-## Installation
+# Installation
 
- 1. hg clone <intermittent faster repo>
+ 1. hg clone {intermittent faster repo}
  2. start up your favorite HTTP server
  3. point your browser at index.html
