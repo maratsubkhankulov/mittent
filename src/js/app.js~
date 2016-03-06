@@ -1,6 +1,6 @@
 var directory = {
     
-    views: {}
+    views: {},
 
     models: {},
 
