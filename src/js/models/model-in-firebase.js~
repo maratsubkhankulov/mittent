@@ -41,3 +41,25 @@ directory.createUser = function(username, password, callback) {
     },
     callback);
 }
+
+directory.checkLogin = function() {
+    function authDataCallback(authData) {
+      if (authData) {
+        console.log("User " + authData.uid + " is logged in with " + authData.provider);
+        directory.controller.setLoggedIn(true);
+        directory.controller.setUsername(authData.password.email);
+      } else {
+        console.log("User is logged out");
+      }
+    }
+
+    // Register the callback to be fired every time auth state changes
+    var ref = new Firebase(directory.firebaseAppUrl);
+    ref.onAuth(authDataCallback); 
+}
+
+directory.unauth = function() {
+    var ref = new Firebase(directory.firebaseAppUrl);
+    ref.unauth();
+}
+
