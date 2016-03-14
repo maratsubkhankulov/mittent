@@ -1,6 +1,6 @@
 var directory = {
     
-    views: {}
+    views: {},
 
     models: {},
 
@@ -106,6 +106,7 @@ directory.Controller = function() {
     this.logout = function() {
         this.setLoggedIn(false);
         this.setUsername("Guest");
+        directory.unauth();
         directory.shellView.update();
     }
 };
@@ -176,6 +177,7 @@ directory.Router = Backbone.Router.extend({
 
 $(document).on("ready", function () {
     directory.controller = new directory.Controller();
+    directory.checkLogin();
     directory.loadTemplates(
         [
         "HomeView",
