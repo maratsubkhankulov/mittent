@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Mittent - an intermittent fasting app</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="lib/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" rel="stylesheet" media="screen">
+    <link href="lib/style.css" rel="stylesheet" media="screen">
+    <!--<link href="bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">-->
+    <!-- <link href='http://fonts.googleapis.com/css?family=Lily+Script+One' rel='stylesheet' type='text/css'> -->
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!--<script src="http://use.edgefonts.net/source-sans-pro.js"></script>-->
+
+    <!-- Google Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-73620175-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+    <!-- End Google Analytics -->
+</head>
+
+<body class="wood-bg" style="padding-top:60px">
+<br/>
+    <div class="row-fluid">
+        <div id="content" class="span12>"></div>
+    </div>
+</div>
+
+<script type="text/javascript" src="lib/underscore-min.js"></script>
+<script type="text/javascript" src="lib/jquery.min.js"></script>
+<script type="text/javascript" src="lib/backbone-min.js"></script>
+<script type="text/javascript" src="lib/moment-with-locales.js"></script>
+<script type="text/javascript" src="lib/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="lib/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript" src="lib/Chart.min.js"></script>
+<script type="text/javascript" src="lib/Chart.StackedBar.js"></script>
+
+<!-- My app -->
+<script src="js/app.js"></script>
+<script src="js/views/shell.js"></script>
+<script src="js/views/home.js"></script>
+<script src="js/views/landing.js"></script>
+<script src="js/views/log.js"></script>
+<script src="js/views/log-entry.js"></script>
+<script src="js/views/login.js"></script>
+<script src="js/views/stats.js"></script>
+<script src="js/views/graph.js"></script>
+
+<script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
+<script src="https://cdn.firebase.com/libs/backbonefire/0.5.1/backbonefire.min.js"></script>
+
+<script src="js/models/model-in-firebase.js"></script>
+
+<!-- <script src="js/views/login.js"></script> -->
+
+<!-- SELECT ONE (AND ONLY ONE) OF THE DATA PERSISTENCE SOLUTIONS BELOW -->
+
+<!-- Uncomment the script below to access the application data using an in-memory data store -->
+
+<!--
+<script src="js/models/model-in-memory.js"></script>
+-->
+
+<!-- Uncomment the script below to access the application data using RESTful services. Open model-rest.js and adjust the URL attributes to reflect your URL endpoints. -->
+<!--<script src="js/models/model-rest.js"></script>-->
+
+<!-- Uncomment the script below to access the application data using RESTful services with JSONP. Open model-rest.js and adjust the URL attributes to reflect your REST endpoints. -->
+<!--<script src="js/models/model-rest-jsonp.js"></script>-->
+
+<!-- Uncomment the two scripts below to use Parse.com as the data persistence layer. -->
+<!-- <script src="lib/parse-1.2.2.min.js"></script> -->
+<!-- <script src="js/models/model-parse-com.js"></script> -->
+
+</body>
+</html>
