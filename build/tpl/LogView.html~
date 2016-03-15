@@ -1,9 +1,0 @@
-<table class="table table-striped" id="log-list">
-   <thead>
-    <tr>
-       <th>Date &amp; time</th>
-       <th>Note</th>
-       <th></th>
-    </tr>
-   </thead>
-</table>

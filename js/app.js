@@ -114,7 +114,8 @@ directory.Controller = function() {
 directory.Router = Backbone.Router.extend({
 
     routes: {
-        "":                     "landing",
+        "":                     "index",
+        "landing":              "landing",
         "login":                "login",
         "demo":                 "demo",
         "home":                 "home",
@@ -127,6 +128,14 @@ directory.Router = Backbone.Router.extend({
         directory.shellView = new directory.ShellView();
         $('body').html(directory.shellView.render().el);
         this.$content = $("#content");
+    },
+
+    index: function() {
+        if (directory.controller.isLoggedIn()) {
+            directory.router.navigate("home", { trigger: true } );
+        } else {
+            directory.router.navigate("landing", { trigger: true } );
+        }
     },
 
     landing: function() {

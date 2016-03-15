@@ -48,6 +48,7 @@ directory.checkLogin = function() {
         console.log("User " + authData.uid + " is logged in with " + authData.provider);
         directory.controller.setLoggedIn(true);
         directory.controller.setUsername(authData.password.email);
+        directory.controller._currentUid = authData.uid;
       } else {
         console.log("User is logged out");
       }
