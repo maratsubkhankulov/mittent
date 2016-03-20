@@ -1,5 +1,5 @@
 directory.HomeView = Backbone.View.extend({
-    notes: ["Meal - and it was good!", "Plate of good food", "Chow - scrumptious"],
+    notes: ["Lasagna", "Chocolate cake", "Pho", "Lentil salad", "Haggis", "A block of cheese", "Peanut butter and jelly"],
 
     events: {
         "click #logMealBtn":"logMeal",
